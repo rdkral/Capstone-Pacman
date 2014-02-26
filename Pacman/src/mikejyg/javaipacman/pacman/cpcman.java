@@ -614,7 +614,6 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 }
 
 
-/*****************************Open Socket****************************/
 
 
 
