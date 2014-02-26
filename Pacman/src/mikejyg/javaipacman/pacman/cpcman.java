@@ -109,25 +109,33 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	final int SUSPEND=1;  // stop/start
 	final int BOSS=2;      // boss
 	
+	//Initialize Audio Player Files
+	
+		String eatGhost = "/Users/akhoch/Documents/MyCapstone/Capstone-Pacman/Pacman/src/mikejyg/javaipacman/pacman/SoundEffects/EatGhost.wav";
+		String pacDie = "/Users/akhoch/Documents/MyCapstone/Capstone-Pacman/Pacman/src/mikejyg/javaipacman/pacman/SoundEffects/PacManDie.wav";
+		String eatPowerPellet = "/Users/akhoch/Documents/MyCapstone/Capstone-Pacman/Pacman/src/mikejyg/javaipacman/pacman/SoundEffects/PowerPellet.wav";
+	
 	//Music
-	public void playSound()
+	public void playSound(String filename)
     {
 		
-        String filename = "C:/Users/Michael/Documents/Pacman/song.wav";
+   
 
 	    try
 	    {
 	        Clip clip = AudioSystem.getClip();
 	        clip.open(AudioSystem.getAudioInputStream(new File(filename)));
 	        clip.start();
-	        startRound();
+	        //startRound();
 	    }
 	    catch (Exception exc)
 	    {
 	        exc.printStackTrace(System.out);
 	    }
     }
-
+	
+	
+	
 	////////////////////////////////////////////////
 	// initialize the object
 	// only called once at the beginning
@@ -394,6 +402,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		}
 		else if (k==2)	// eaten a powerDot
 		{
+			playSound(eatPowerPellet);	//play eatPowerPellet Audio
 			scoreGhost=200;
 		}
 
@@ -411,6 +420,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			k=ghosts[i].testCollision(pac.iX, pac.iY);
 			if (k==1)	// kill pac
 			{
+				playSound(pacDie);	//play pacDie Audio
 				pacRemain--;
 				changePacRemain=1;
 				gameState=DEADWAIT;	// stop the game
@@ -419,6 +429,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			}
 			else if (k==2)	// caught by pac
 			{
+				playSound(eatGhost);	//play eatGhost Audio
 				score+= scoreGhost * ((round+1)/2) ;
 				changeScore=1;
 				scoreGhost*=2;
