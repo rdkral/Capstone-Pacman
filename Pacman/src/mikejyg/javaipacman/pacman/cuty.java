@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 1997-2010 Junyang Gu <mikejyg@gmail.com>
+ * Copyright (C) 1997-2010 Junyang Gu <mikejyg@gmail.com> 
  * 
  * This file is part of javaiPacman.
  *
@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ *TESTTTTTTTICALLLLLSSSS
  * You should have received a copy of the GNU General Public License
  * along with javaiPacman.  If not, see <http://www.gnu.org/licenses/>.
  */
