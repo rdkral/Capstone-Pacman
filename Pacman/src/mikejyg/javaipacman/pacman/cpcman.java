@@ -21,6 +21,10 @@ package mikejyg.javaipacman.pacman;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 /**
  * the main class of the pacman game
@@ -104,6 +108,24 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	final int NONE=0;
 	final int SUSPEND=1;  // stop/start
 	final int BOSS=2;      // boss
+	
+	public void playSound()
+    {
+		
+        String filename = "C:/Users/Michael/Documents/Pacman/song.wav";
+
+	    try
+	    {
+	        Clip clip = AudioSystem.getClip();
+	        clip.open(AudioSystem.getAudioInputStream(new File(filename)));
+	        clip.start();
+	        startRound();
+	    }
+	    catch (Exception exc)
+	    {
+	        exc.printStackTrace(System.out);
+	    }
+    }
 
 	////////////////////////////////////////////////
 	// initialize the object
@@ -222,7 +244,8 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		newMaze=true;
 
 		round=1;
-
+		
+		//playSound();
 		startRound();
 	}
 
