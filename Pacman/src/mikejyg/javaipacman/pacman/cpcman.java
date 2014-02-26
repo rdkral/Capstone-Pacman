@@ -109,6 +109,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	final int SUSPEND=1;  // stop/start
 	final int BOSS=2;      // boss
 	
+	//Music
 	public void playSound()
     {
 		
