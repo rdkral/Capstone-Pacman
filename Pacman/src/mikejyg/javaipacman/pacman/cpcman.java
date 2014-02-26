@@ -610,7 +610,12 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	public void setFinalized(boolean finalized) {
 		this.finalized = finalized;
 	}
+	
 }
+
+
+/*****************************Open Socket****************************/
+
 
 
 
