@@ -27,7 +27,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 /**
- * the main class of the pacman game
+ * the main class of the pacman game 
  */
 public class cpcman extends Frame
 implements Runnable, KeyListener, ActionListener, WindowListener
