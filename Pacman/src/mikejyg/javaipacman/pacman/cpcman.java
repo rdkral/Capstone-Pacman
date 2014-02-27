@@ -22,6 +22,8 @@ package mikejyg.javaipacman.pacman;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
