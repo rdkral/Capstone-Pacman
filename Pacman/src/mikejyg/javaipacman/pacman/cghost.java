@@ -28,6 +28,7 @@ public class cghost
 	final int OUT=1;
 	final int BLIND=2;
 	final int EYE=3;
+	
 
 	final int[] steps=	{7, 7, 1, 1};
 	final int[] frames=	{8, 8, 2, 1};
@@ -47,6 +48,7 @@ public class cghost
 	// the applet this object is associated to
 	Window applet;
 	Graphics graphics;
+	Color color;
 
 	// the maze the ghosts knows
 	cmaze maze;
@@ -56,11 +58,12 @@ public class cghost
 	Image imageBlind;
 	Image imageEye;
 
-	cghost(Window a, Graphics g, cmaze m, Color color)
+	cghost(Window a, Graphics g, cmaze m, Color newColor)
 	{
 		applet=a;
 		graphics=g;
 		maze=m;
+		color = newColor;
 
 		imageGhost=applet.createImage(18,18);
 		cimage.drawGhost(imageGhost, 0, color);
@@ -100,6 +103,16 @@ public class cghost
 			graphics.drawImage(imageEye, iX-1, iY-1, applet);
 	}  
 
+	public void setColor(Color newColor)
+	{
+		color = newColor;
+	}
+	
+	public Color getColor()
+	{
+		return color;
+	}
+	
 	public void move(int iPacX, int iPacY, int iPacDir)
 	{
 		if (iStatus==BLIND)

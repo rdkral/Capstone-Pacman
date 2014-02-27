@@ -66,6 +66,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 	// game counters
 	final int PAcLIVE=3;
+	int numberOfGhosts = 6;
 	int pacRemain;
 	int changePacRemain;  // to signal redraw remaining pac
 
@@ -151,7 +152,15 @@ implements Runnable, KeyListener, ActionListener, WindowListener
     }
 	
 	
+	public int getNumberOfGhosts()
+	{
+		return numberOfGhosts;
+	}
 	
+	public void setNumberOfGhosts(int ghostAmount)
+	{
+		numberOfGhosts = ghostAmount;
+	}
 	////////////////////////////////////////////////
 	// initialize the object
 	// only called once at the beginning
@@ -210,18 +219,24 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 		// initialize ghosts object
 		// 4 ghosts
-		ghosts = new cghost[4];
-		for (int i=0; i<4; i++)
+		ghosts = new cghost[numberOfGhosts];
+		for (int i=0; i<numberOfGhosts; i++)
 		{
 			Color color;
 			if (i==0)
-				color=Color.red;
+				color =Color.red;
 			else if (i==1)
 				color=Color.blue;
 			else if (i==2)
 				color=Color.white;
-			else 
+			else if (i==3)
 				color=Color.orange;
+			else if (i==4)
+				color=Color.magenta;
+			else if (i==5)
+				color=Color.pink;
+			else
+				color=Color.yellow;
 			ghosts[i]=new cghost(this, offScreenG, maze, color);
 		}
 
@@ -288,7 +303,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 		pac.start();
 		pacKeyDir=ctables.DOWN;
-		for (int i=0; i<4; i++)
+		for (int i=0; i<numberOfGhosts; i++)
 			ghosts[i].start(i,round);
 
 		gameState=STARTWAIT;
@@ -344,7 +359,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 		powerDot.draw();
 
-		for (int i=0; i<4; i++)
+		for (int i=0; i<numberOfGhosts; i++)
 			ghosts[i].draw();
 
 		pac.draw();
@@ -406,7 +421,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 		int oldScore=score;
 
-		for (int i=0; i<4; i++)
+		for (int i=0; i<numberOfGhosts; i++)
 			ghosts[i].move(pac.iX, pac.iY, pac.iDir);
 
 		k=pac.move(pacKeyDir);
@@ -431,7 +446,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			return;
 		}
 
-		for (int i=0; i<4; i++)
+		for (int i=0; i<numberOfGhosts; i++)
 		{
 			k=ghosts[i].testCollision(pac.iX, pac.iY);
 			if (k==1)	// kill pac
@@ -632,7 +647,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		maze=null;
 		pac=null;
 		powerDot=null;
-		for (int i=0; i<4; i++)
+		for (int i=0; i<numberOfGhosts; i++)
 			ghosts[i]=null;
 		ghosts=null;
 

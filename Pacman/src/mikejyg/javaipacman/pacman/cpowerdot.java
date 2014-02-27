@@ -90,7 +90,7 @@ public class cpowerdot
 				clear(i);
 			}
 		}
-		for (int i=0; i<4; i++)
+		for (int i=0; i<ghosts.length; i++)
 			ghosts[i].blind();
 	}
 
