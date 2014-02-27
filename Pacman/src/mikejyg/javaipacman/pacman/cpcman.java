@@ -111,9 +111,23 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	
 	//Initialize Audio Player Files
 	
-		String eatGhost = "/Users/akhoch/Documents/MyCapstone/Capstone-Pacman/Pacman/src/mikejyg/javaipacman/pacman/SoundEffects/EatGhost.wav";
-		String pacDie = "/Users/akhoch/Documents/MyCapstone/Capstone-Pacman/Pacman/src/mikejyg/javaipacman/pacman/SoundEffects/PacManDie.wav";
-		String eatPowerPellet = "/Users/akhoch/Documents/MyCapstone/Capstone-Pacman/Pacman/src/mikejyg/javaipacman/pacman/SoundEffects/PowerPellet.wav";
+	Path pathPP = Paths.get("PowerPellet.wav");
+	Path absPathPP = pathPP.toAbsolutePath();
+	File inputFilePP = new File(absPathPP.toString());
+	
+	Path pathEG = Paths.get("EatGhost.wav");
+	Path absPathEG = pathEG.toAbsolutePath();
+	File inputFileEG = new File(absPathEG.toString());
+	
+	Path path = Paths.get("PacManDie.wav");
+	Path absPath = path.toAbsolutePath();
+	File inputFile = new File(absPath.toString());
+	
+	
+	
+	String eatPowerPellet = inputFile.toString();
+	String eatGhost = inputFileEG.toString();
+	String pacDie = inputFile.toString();
 	
 	//Music
 	public void playSound(String filename)
@@ -647,18 +661,3 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
