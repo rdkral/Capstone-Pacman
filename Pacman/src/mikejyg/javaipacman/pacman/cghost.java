@@ -30,8 +30,13 @@ public class cghost
 	final int EYE=3;
 	
 
-	final int[] steps=	{7, 7, 1, 1};
-	final int[] frames=	{8, 8, 2, 1};
+	/*
+	 * Determines the speed of the ghosts. If steps = frames ghost are really fast
+	 * The lower the steps compared to the frames the slower the ghost
+	 * 
+	 */
+	final int[] steps=	{7, 7, 1, 1,6,2,1,9};
+	final int[] frames=	{8, 8, 2, 1,8,3,10,9};
 
 	final int INIT_BLIND_COUNT=600;	// remain blind for ??? frames
 	int blindCount;
@@ -77,9 +82,28 @@ public class cghost
 
 	public void start(int initialPosition, int round)
 	{
-		if (initialPosition>=2)
+	
+		if (initialPosition>=6)
+		{
 			initialPosition++;
-		iX=(8+initialPosition)*16; iY=8*16;
+			iX=(4+initialPosition)*16; iY=8*16;
+		}
+		else if (initialPosition>=4)
+		{
+			iX=(4+initialPosition)*16; iY=8*16;
+		}
+
+		else if (initialPosition>=2)
+		{
+			initialPosition++;
+			iX=(8+initialPosition)*16; iY=7*16;
+			
+		}
+		else
+		{
+			iX=(8+initialPosition)*16; iY=7*16;
+		}
+		
 		iDir=3;
 		iStatus=IN;
 

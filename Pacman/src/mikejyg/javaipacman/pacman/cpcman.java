@@ -66,7 +66,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 	// game counters
 	final int PAcLIVE=3;
-	int numberOfGhosts = 6;
+	int numberOfGhosts = 8;
 	int pacRemain;
 	int changePacRemain;  // to signal redraw remaining pac
 
@@ -217,7 +217,10 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		// initialize maze object
 		maze = new cmaze(this, offScreenG);
 
-		// initialize ghosts object
+		/*
+		 * initialize the amount of ghost in the game by allocating an array of the cghost class
+		 * Possibly make this a vector, to make it easier to add more ghosts.
+		 */
 		// 4 ghosts
 		ghosts = new cghost[numberOfGhosts];
 		for (int i=0; i<numberOfGhosts; i++)
@@ -235,6 +238,8 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 				color=Color.magenta;
 			else if (i==5)
 				color=Color.pink;
+			else if(i==6)
+				color=Color.cyan;
 			else
 				color=Color.yellow;
 			ghosts[i]=new cghost(this, offScreenG, maze, color);
@@ -304,7 +309,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		pac.start();
 		pacKeyDir=ctables.DOWN;
 		for (int i=0; i<numberOfGhosts; i++)
+		{	
 			ghosts[i].start(i,round);
+		}
 
 		gameState=STARTWAIT;
 		wait=WAITCOUNT;
@@ -320,6 +327,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			// System.out.println("first paint(...)...");
 
 			// init images, must be done after show() because of Graphics
+			//Sets the number of ghosts etc.
 			initImages();
 
 			// set the proper size of canvas

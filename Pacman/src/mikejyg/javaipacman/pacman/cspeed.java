@@ -43,14 +43,14 @@ public class cspeed
 		start(1,1);
 	}
 
-	public void start(int s, int f)
+	public void start(int stepsValue, int frameValue)
 	throws Error
 	{
-		if (f<s)
+		if (frameValue<stepsValue)
 			throw new Error("Cspeed.init(...): frame must >= step");
 
-		steps=s;
-		frames=f;
+		steps=stepsValue;
+		frames=frameValue;
 		frameStepRatio=(float)frames/(float)steps;
 
 		stepCount=steps;
