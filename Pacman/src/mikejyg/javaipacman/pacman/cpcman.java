@@ -24,9 +24,12 @@ import java.awt.event.*;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+
 
 /**
  * the main class of the pacman game 
@@ -77,6 +80,13 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	int changeScore;	// signal score change
 	int changeHiScore;  // signal change of hi score
 
+	String currEmotion;	
+	boolean newEmotion = false;
+	
+	//music
+	boolean isPlaying = false;
+	boolean firstSong = true;
+	
 	// score images
 	Image imgScore;
 	Graphics imgScoreG;
@@ -99,7 +109,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 	// whether it is played in a new maze
 	boolean newMaze;
-
+	Timer timers = new Timer();
 	// GUIs
 	MenuBar menuBar;
 	Menu help;
@@ -127,10 +137,34 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	File inputFile = new File(absPath.toString());
 	
 	
+	/********************************************************
+	 * MUSIC FILES
+	 */
+	Path pathEM = Paths.get("song.wav");
+	Path absPathEM = pathEM.toAbsolutePath();
+	File inputFileAngry = new File(absPathEM.toString());
+
+	Path pathEM2 = Paths.get("song2.wav");
+	Path absPathEM2 = pathEM2.toAbsolutePath();
+	File inputFileSad = new File(absPathEM2.toString());
 	
-	String eatPowerPellet = inputFile.toString();
+	Path pathEM3 = Paths.get("song3.wav");
+	Path absPathEM3 = pathEM3.toAbsolutePath();
+	File inputFileHappy = new File(absPathEM3.toString());
+	
+	/*********************************************************
+	 * 
+	 */
+	
+	
+	String eatPowerPellet = inputFilePP.toString();
 	String eatGhost = inputFileEG.toString();
 	String pacDie = inputFile.toString();
+	
+	String emotion;
+	
+	Clip clip;
+	Clip emote;
 	
 	//Music
 	public void playSound(String filename)
@@ -151,10 +185,32 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	    }
     }
 	
-	
-	public int getNumberOfGhosts()
+	public void emoteSong(String song)
 	{
-		return numberOfGhosts;
+	    try
+	    {	   
+	    	emote = AudioSystem.getClip();
+	    	
+	    	switch(currEmotion)
+	    	{
+		    	case "angry" 	: 	emotion = inputFileAngry.toString();
+		    						break;
+		    	case "sad"		: 	emotion = inputFileSad.toString();
+									break;
+		    	case "happy"	: 	emotion = inputFileHappy.toString();
+		    						break;
+	    	}
+
+	    	emote.open(AudioSystem.getAudioInputStream(new File(emotion)));
+	    	emote.start();
+	    	
+	    	firstSong = false;
+	        
+	    }
+	    catch (Exception exc)
+	    {
+	        exc.printStackTrace(System.out);
+	    }
 	}
 	
 	public void setNumberOfGhosts(int ghostAmount)
@@ -441,6 +497,12 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		}
 		else if (k==2)	// eaten a powerDot
 		{
+			//testing spot for emotion change
+			randEmotion();
+			
+			newEmotion = true;
+			isPlaying = false;
+			
 			playSound(eatPowerPellet);	//play eatPowerPellet Audio
 			scoreGhost=200;
 		}
@@ -460,6 +522,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			if (k==1)	// kill pac
 			{
 				playSound(pacDie);	//play pacDie Audio
+				emote.stop();		//stop emote song
 				pacRemain--;
 				changePacRemain=1;
 				gameState=DEADWAIT;	// stop the game
@@ -490,6 +553,40 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			}
 		}
 	}	
+/*
+	class timerEmotion extends TimerTask {
+		public void run()
+		{
+			randEmotion();
+			
+			newEmotion = true;
+			isPlaying = false;
+		}
+	}
+
+	private void timerEmotion()
+	{
+		randEmotion();
+		
+		newEmotion = true;
+		isPlaying = false;
+	}*/
+	
+	private void randEmotion() 
+	{
+		// TODO Auto-generated method stub
+		double rand = Math.random() * 3;
+		
+		rand = Math.floor(rand);
+		
+		if(rand == 0)
+			currEmotion = "sad";
+		else if (rand == 1)
+			currEmotion = "angry";
+		else
+			currEmotion = "happy";
+			
+	}
 
 	///////////////////////////////////////////
 	// this is the routine draw each frames
@@ -634,7 +731,31 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 			signalMove++;
 			repaint();
+						
+			if(newEmotion)
+					emotionChange();
 		}
+	}
+	public void emotionChange()
+	{
+		if (currEmotion != null)
+		{
+			if(firstSong)
+			{
+				emoteSong(emotion);
+				newEmotion = false;
+			}
+			else
+			{
+				emote.stop();
+				
+				emoteSong(emotion);
+				newEmotion = false;
+			}
+			
+		}
+		else
+			newEmotion = false;
 	}
 
 	// for applet the check state
