@@ -20,6 +20,7 @@
 package mikejyg.javaipacman.pacman;
 
 import java.awt.*;
+import java.util.*;
 
 /* define the maze */
 public class cmaze
@@ -29,6 +30,7 @@ public class cmaze
 	static final int WALL=1;
 	static final int DOOR=2;
 	static final int DOT=4;
+	static final int ONE_UP=6; //<-----------One up
 	static final int POWER_DOT=8;
 
 	static final int HEIGHT=16;
@@ -47,7 +49,10 @@ public class cmaze
 
 	// the dot image
 	Image imageDot;
-
+	
+	// the one-up image
+	Image imageOneUp; //<---------------------------One-up
+	
 	// total dots left
 	int iTotalDotcount;
 
@@ -63,6 +68,7 @@ public class cmaze
 
 		imageMaze=applet.createImage(iWidth, iHeight);
 		imageDot=applet.createImage(2,2);
+		imageOneUp = applet.createImage(16, 16); //<---------------One-up
 
 		// create data
 		iMaze=new int[HEIGHT][WIDTH];
@@ -70,6 +76,23 @@ public class cmaze
 
 	public void start()
 	{
+		int n = 6;
+		Random generator = new Random();
+		int level = generator.nextInt(n); // <-- random number generator here
+		//level=0;
+		if (level == 0)
+			ctables.MazeDefine = ctables.MazeDefine_lvl1;
+		else if (level == 1)
+			ctables.MazeDefine = ctables.MazeDefine_lvl2;
+		else if (level == 2)
+			ctables.MazeDefine = ctables.MazeDefine_lvl3;
+		else if (level == 3)
+			ctables.MazeDefine = ctables.MazeDefine_lvl4;
+		else if (level == 4)
+			ctables.MazeDefine = ctables.MazeDefine_lvl5;
+		/*else
+			ctables.MazeDefine = ctables.MazeDefine;*/
+		
 		int i,j,k;
 		iTotalDotcount=0;
 		for (i=0; i<HEIGHT; i++)
@@ -93,6 +116,9 @@ public class cmaze
 				case '-':
 					k=DOOR;
 					break;
+				case '1': //<---------------One-up
+					k=ONE_UP; //<---------------One-up
+					break; //<---------------One-up
 				default:
 					k=DOT;
 					iTotalDotcount++;
@@ -108,6 +134,7 @@ public class cmaze
 	{
 		graphics.drawImage(imageMaze,0,0,applet);
 		drawDots();
+		drawOneUp(); //<---------------One-up
 	}
 
 	void drawDots()	// on the offscreen
@@ -121,12 +148,23 @@ public class cmaze
 					graphics.drawImage(imageDot, j*16+7,i*16+7,applet);
 			}
 	}
-
+	
+	void drawOneUp() // <--------------------------One-up
+	{
+		int i,j;
+		for (i=0; i<HEIGHT; i++)
+			for (j=0; j<WIDTH; j++)
+			{
+				if (iMaze[i][j]==ONE_UP)
+					graphics.drawImage(imageOneUp, j*16,i*16,applet);
+			}
+	}
+	
 	void createImage()
 	{
 		// create the image of a dot
 		cimage.drawDot(imageDot);
-
+		cimage.drawOneUp(imageOneUp); //<--------------------One-up
 		// create the image of the maze
 		Graphics gmaze=imageMaze.getGraphics();
 
@@ -141,6 +179,12 @@ public class cmaze
 	{
 		if (iMaze[iRow][icol]==DOT)
 			graphics.drawImage(imageDot, icol*16+7,iRow*16+7,applet);
+	}	
+	
+	public void DrawOneUp(int icol, int iRow) //<----------------------------One-up
+	{
+		if (iMaze[iRow][icol]==ONE_UP)
+			graphics.drawImage(imageOneUp, icol*16,iRow*16,applet);
 	}	
 
 	void DrawWall(Graphics g)

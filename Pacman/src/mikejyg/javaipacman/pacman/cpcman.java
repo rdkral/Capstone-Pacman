@@ -506,6 +506,12 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			playSound(eatPowerPellet);	//play eatPowerPellet Audio
 			scoreGhost=200;
 		}
+		else if (k==3)	//<------------------------ eaten a one-up
+		{
+			//playSound(eatPowerPellet);	//play eatPowerPellet Audio
+			pacRemain++; //<<---------------------One-up
+			changePacRemain=1;
+		}
 
 		if (maze.iTotalDotcount==0)
 		{
@@ -553,25 +559,6 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			}
 		}
 	}	
-/*
-	class timerEmotion extends TimerTask {
-		public void run()
-		{
-			randEmotion();
-			
-			newEmotion = true;
-			isPlaying = false;
-		}
-	}
-
-	private void timerEmotion()
-	{
-		randEmotion();
-		
-		newEmotion = true;
-		isPlaying = false;
-	}*/
-	
 	private void randEmotion() 
 	{
 		// TODO Auto-generated method stub
@@ -697,9 +684,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	{}
 
 	public void windowClosing(WindowEvent e)
-	{
-		dispose();
-	}
+	{}
 
 	public void windowClosed(WindowEvent e)
 	{}
@@ -735,6 +720,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			if(newEmotion)
 					emotionChange();
 		}
+		emote.stop();
 	}
 	public void emotionChange()
 	{
@@ -793,6 +779,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		help=null;
 		about=null;
 
+		emote.stop();
 		super.dispose();
 
 		finalized=true;

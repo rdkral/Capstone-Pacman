@@ -28,7 +28,7 @@ public class cghost
 	final int OUT=1;
 	final int BLIND=2;
 	final int EYE=3;
-	
+
 
 	/*
 	 * Determines the speed of the ghosts. If steps = frames ghost are really fast
@@ -82,7 +82,7 @@ public class cghost
 
 	public void start(int initialPosition, int round)
 	{
-	
+
 		if (initialPosition>=6)
 		{
 			initialPosition++;
@@ -97,13 +97,13 @@ public class cghost
 		{
 			initialPosition++;
 			iX=(8+initialPosition)*16; iY=7*16;
-			
+
 		}
 		else
 		{
 			iX=(8+initialPosition)*16; iY=7*16;
 		}
-		
+
 		iDir=3;
 		iStatus=IN;
 
@@ -116,6 +116,8 @@ public class cghost
 	{
 		maze.DrawDot(iX/16, iY/16);
 		maze.DrawDot(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
+		maze.DrawOneUp(iX/16, iY/16); //<---------------------------------One-up
+		maze.DrawOneUp(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0)); //<-----One-up
 
 		if (iStatus==BLIND && iBlink==1 && iBlindCount%32<16)
 			graphics.drawImage(imageGhost, iX-1, iY-1, applet);
@@ -131,12 +133,12 @@ public class cghost
 	{
 		color = newColor;
 	}
-	
+
 	public Color getColor()
 	{
 		return color;
 	}
-	
+
 	public void move(int iPacX, int iPacY, int iPacDir)
 	{
 		if (iStatus==BLIND)
@@ -477,5 +479,3 @@ public class cghost
 		return(0);
 	}
 }
-
-

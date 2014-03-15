@@ -79,6 +79,8 @@ public class cpac
 	{
 		maze.DrawDot(iX/16, iY/16);
 		maze.DrawDot(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
+		maze.DrawOneUp(iX/16, iY/16); //<-------------------------------One-up
+		maze.DrawOneUp(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0)); //<---One-up
 
 		int iImageStep=(iX%16 + iY%16)/2; 	// determine shape of PAc
 		if (iImageStep<4)
@@ -132,6 +134,11 @@ public class cpac
 				powerDot.eat(iX/16, iY/16);
 				maze.iMaze[iY/16][iX/16]=cmaze.BLANK;
 				break;
+			case cmaze.ONE_UP: //<-----------------One-up
+				eaten=3;
+				maze.iMaze[iY/16][iX/16]=cmaze.BLANK;
+				break;
+			
 			}
 
 			if (maze.iMaze[iY/16+ ctables.iYDirection[iDir]]
