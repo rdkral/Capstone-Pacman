@@ -27,9 +27,12 @@ import java.nio.file.Paths;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static java.lang.System.*;  //for printing the value so it can be seen
+
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
+import javax.swing.SwingWorker;	//for multi-threading
 
 /**
  * the main class of the pacman game 
@@ -239,6 +242,8 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		about.addActionListener(this);
 
 		setSize(canvasWidth, canvasHeight);
+        
+        worker.execute();		//Executes another thread to update the affective state value every 10 sec
 
 		show();
 
@@ -792,5 +797,24 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	public void setFinalized(boolean finalized) {
 		this.finalized = finalized;
 	}
-	
+    
+    
+    /**********Multi-threading**********/
+    
+	SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>()	{
+    @Override
+    protected Void doInBackground()	throws Exception{
+        while(true){
+            try {
+                AffectiveAdaptiveState.getAffectiveState();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+            out.println(Global.affectiveState);
+            Thread.sleep(10000);			//wait 10 seconds before updating affective state
+        }
+        //return null;
+    }
+    };
+
 }
