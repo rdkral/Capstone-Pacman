@@ -19,9 +19,10 @@
 
 package mikejyg.javaipacman.pacman;
 
-import java.awt.*;
+import java.awt.*; 
 import java.awt.event.*;
 import java.io.File;
+import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Timer;
@@ -31,7 +32,6 @@ import static java.lang.System.*;  //for printing the value so it can be seen
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-
 import javax.swing.SwingWorker;	//for multi-threading
 
 /**
@@ -224,6 +224,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	// initialize the object
 	// only called once at the beginning
 	////////////////////////////////////////////////
+	@SuppressWarnings("deprecation")
 	public cpcman()
 	{
 		super("P*C MAN");
@@ -725,7 +726,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			if(newEmotion)
 					emotionChange();
 		}
-		emote.stop();
+		//emote.stop();
 	}
 	public void emotionChange()
 	{
@@ -806,7 +807,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
     protected Void doInBackground()	throws Exception{
         while(true){
             try {
-                AffectiveAdaptiveState.getAffectiveState();
+                AffectiveStateAccessor.getAffectiveState();
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }

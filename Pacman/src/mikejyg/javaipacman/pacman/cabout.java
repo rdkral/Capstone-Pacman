@@ -38,6 +38,7 @@ implements MouseListener
 			""
 	};
 
+	@SuppressWarnings("deprecation")
 	cabout(Frame parent)
 	{
 		super(parent);

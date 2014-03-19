@@ -20,7 +20,7 @@ import java.net.UnknownHostException;
  * 8 = interested
  */
 
-public class AffectiveAdaptiveState {
+public class AffectiveStateAccessor {
 	
 	
 	
