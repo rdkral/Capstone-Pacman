@@ -20,6 +20,7 @@
 package mikejyg.javaipacman.pacman;
 
 import java.awt.*;
+import java.util.Vector;
 
 public class cpowerdot
 {
@@ -39,7 +40,7 @@ public class cpowerdot
 	Graphics graphics;
 
 	// the ghosts it controls
-	cghost [] ghosts;
+	Vector<cghost> ghosts;
 
 	// the power dot image
 	Image imagePowerDot;
@@ -47,7 +48,7 @@ public class cpowerdot
 	// the blank image
 	Image imageBlank;
 
-	cpowerdot(Window a, Graphics g, cghost [] gh)
+	cpowerdot(Window a, Graphics g, Vector<cghost> gh)
 	{
 		applet=a;
 		graphics=g;
@@ -90,8 +91,8 @@ public class cpowerdot
 				clear(i);
 			}
 		}
-		for (int i=0; i<ghosts.length; i++)
-			ghosts[i].blind();
+		for (int i=0; i<ghosts.size(); i++)
+			ghosts.elementAt(i).blind();
 	}
 
 	public void draw()

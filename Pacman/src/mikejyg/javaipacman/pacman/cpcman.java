@@ -27,6 +27,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Vector;
 
 import static java.lang.System.*;  //for printing the value so it can be seen
 
@@ -68,11 +69,11 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	cmaze maze;
 	cpac pac;
 	cpowerdot powerDot;
-	cghost [] ghosts;
+	Vector<cghost> ghosts;
 
 	// game counters
 	final int PAcLIVE=3;
-	int numberOfGhosts = 8;
+	int numberOfGhosts = 4;
 	int pacRemain;
 	int changePacRemain;  // to signal redraw remaining pac
 
@@ -284,7 +285,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		 * Possibly make this a vector, to make it easier to add more ghosts.
 		 */
 		// 4 ghosts
-		ghosts = new cghost[numberOfGhosts];
+		ghosts = new Vector<cghost>();
 		for (int i=0; i<numberOfGhosts; i++)
 		{
 			Color color;
@@ -304,7 +305,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 				color=Color.cyan;
 			else
 				color=Color.yellow;
-			ghosts[i]=new cghost(this, offScreenG, maze, color);
+			ghosts.addElement(new cghost(this, offScreenG, maze, color));;
 		}
 
 		// initialize power dot object
@@ -370,10 +371,11 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 		pac.start();
 		pacKeyDir=ctables.DOWN;
-		for (int i=0; i<numberOfGhosts; i++)
+		for (int i=0; i<ghosts.size(); i++)
 		{	
-			ghosts[i].start(i,round);
+			ghosts.elementAt(i).start(i,round);
 		}
+		
 
 		gameState=STARTWAIT;
 		wait=WAITCOUNT;
@@ -429,8 +431,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 		powerDot.draw();
 
-		for (int i=0; i<numberOfGhosts; i++)
-			ghosts[i].draw();
+	
+		for (int i=0; i<ghosts.size(); i++)
+			ghosts.elementAt(i).draw();
 
 		pac.draw();
 
@@ -491,8 +494,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 		int oldScore=score;
 
-		for (int i=0; i<numberOfGhosts; i++)
-			ghosts[i].move(pac.iX, pac.iY, pac.iDir);
+
+		for (int i=0; i<ghosts.size(); i++)
+			ghosts.elementAt(i).move(pac.iX, pac.iY, pac.iDir);
 
 		k=pac.move(pacKeyDir);
 
@@ -509,6 +513,17 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			newEmotion = true;
 			isPlaying = false;
 			
+			//Testing to make sure ghosts can be added in real time.
+			if(ghosts.size() < 8)
+			{
+				ghosts.addElement(new cghost(this, offScreenG, maze, Color.GRAY));
+				ghosts.lastElement().start(ghosts.size(), round);
+			}
+			else
+			{
+				// And deleted.
+				ghosts.remove(ghosts.size()-1);
+			}
 			playSound(eatPowerPellet);	//play eatPowerPellet Audio
 			scoreGhost=200;
 		}
@@ -528,13 +543,13 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			return;
 		}
 
-		for (int i=0; i<numberOfGhosts; i++)
+		for (int i=0; i<ghosts.size(); i++)
 		{
-			k=ghosts[i].testCollision(pac.iX, pac.iY);
+			k=ghosts.elementAt(i).testCollision(pac.iX, pac.iY);
 			if (k==1)	// kill pac
 			{
 				playSound(pacDie);	//play pacDie Audio
-				emote.stop();		//stop emote song
+				//emote.stop();		//stop emote song
 				pacRemain--;
 				changePacRemain=1;
 				gameState=DEADWAIT;	// stop the game
@@ -769,7 +784,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		pac=null;
 		powerDot=null;
 		for (int i=0; i<numberOfGhosts; i++)
-			ghosts[i]=null;
+			ghosts.setElementAt(null, i);
 		ghosts=null;
 
 		// score images

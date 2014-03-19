@@ -17,7 +17,10 @@
  * along with javaiPacman.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 package mikejyg.javaipacman.pacman;
+
+import java.util.Vector;
 
 /**
  * cpacmove.java
@@ -46,19 +49,19 @@ class cpacmove
 	int iValid[]; 
 
 	cpac cPac;
-	cghost [] cGhost;
+	Vector<cghost> cGhost;
 	cmaze cMaze;
 
-	cpacmove(cpac pac, cghost ghost[], cmaze maze)
+	cpacmove(cpac pac, Vector<cghost> ghost, cmaze maze)
 	{
 		iDirScore=new int[4];
 
 		iValid=new int [4];
 		cPac=pac;
 
-		cGhost=new cghost[4];
+		cGhost=new Vector(4);
 		for (int i=0; i<4; i++)
-			cGhost[i]=ghost[i];
+			cGhost.setElementAt(ghost.elementAt(i), i);
 
 		cMaze=maze;
 	}
@@ -133,12 +136,12 @@ class cpacmove
 		// calculate ghosts one by one
 		for (int i=0; i<4; i++)
 		{
-			iXDis=cGhost[i].iX - cPac.iX;
-			iYDis=cGhost[i].iY - cPac.iY;
+			iXDis=cGhost.elementAt(i).iX - cPac.iX;
+			iYDis=cGhost.elementAt(i).iY - cPac.iY;
 
 			iDis=Math.sqrt(iXDis*iXDis+iYDis*iYDis);
 
-			if (cGhost[i].iStatus == cGhost[i].BLIND)
+			if (cGhost.elementAt(i).iStatus == cGhost.elementAt(i).BLIND)
 			{
 
 
