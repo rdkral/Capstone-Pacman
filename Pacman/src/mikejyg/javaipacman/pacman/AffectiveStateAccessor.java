@@ -21,9 +21,6 @@ import java.net.UnknownHostException;
  */
 
 public class AffectiveStateAccessor {
-	
-	
-	
 	public static void getAffectiveState()	throws UnknownHostException	{
 		//Define host, socket, and streams.
 		InetAddress host = InetAddress.getLocalHost();
@@ -41,7 +38,7 @@ public class AffectiveStateAccessor {
             ois = new ObjectInputStream(socket.getInputStream());
             //Convert input stream to string
             String response = ois.readObject().toString();
-            
+            //out.println(response);
             //Use string
             //Update Affective State
             Global.affectiveState=calculateState(response);

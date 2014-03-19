@@ -140,21 +140,45 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	Path absPath = path.toAbsolutePath();
 	File inputFile = new File(absPath.toString());
 	
+	Path path1up = Paths.get("1up.wav");
+	Path absPath1up = path1up.toAbsolutePath();
+	File inputFile1up = new File(absPath1up.toString());
+	
 	
 	/********************************************************
 	 * MUSIC FILES
 	 */
-	Path pathEM = Paths.get("song.wav");
+	Path pathEM = Paths.get("songSpeed1.wav");
 	Path absPathEM = pathEM.toAbsolutePath();
-	File inputFileAngry = new File(absPathEM.toString());
+	File inputFile1 = new File(absPathEM.toString());
 
-	Path pathEM2 = Paths.get("song2.wav");
+	Path pathEM2 = Paths.get("songSpeed2.wav");
 	Path absPathEM2 = pathEM2.toAbsolutePath();
-	File inputFileSad = new File(absPathEM2.toString());
+	File inputFile2 = new File(absPathEM2.toString());
 	
-	Path pathEM3 = Paths.get("song3.wav");
+	Path pathEM3 = Paths.get("songSpeed3.wav");
 	Path absPathEM3 = pathEM3.toAbsolutePath();
-	File inputFileHappy = new File(absPathEM3.toString());
+	File inputFile3 = new File(absPathEM3.toString());
+	
+	Path pathEM4 = Paths.get("songSpeed3.wav");
+	Path absPathEM4 = pathEM4.toAbsolutePath();
+	File inputFile4 = new File(absPathEM4.toString());
+
+	Path pathEM5 = Paths.get("songSpeed4.wav");
+	Path absPathEM5 = pathEM5.toAbsolutePath();
+	File inputFile5 = new File(absPathEM5.toString());
+	
+	Path pathEM6 = Paths.get("songSpeed5.wav");
+	Path absPathEM6 = pathEM6.toAbsolutePath();
+	File inputFile6 = new File(absPathEM6.toString());
+	
+	Path pathEM7 = Paths.get("songSpeed6.wav");
+	Path absPathEM7 = pathEM7.toAbsolutePath();
+	File inputFile7 = new File(absPathEM7.toString());
+	
+	Path pathEM8 = Paths.get("songSpeed7.wav");
+	Path absPathEM8 = pathEM8.toAbsolutePath();
+	File inputFile8 = new File(absPathEM8.toString());
 	
 	/*********************************************************
 	 * 
@@ -164,6 +188,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	String eatPowerPellet = inputFilePP.toString();
 	String eatGhost = inputFileEG.toString();
 	String pacDie = inputFile.toString();
+	String life = inputFile1up.toString();
 	
 	String emotion;
 	
@@ -173,9 +198,6 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	//Music
 	public void playSound(String filename)
     {
-		
-   
-
 	    try
 	    {
 	        Clip clip = AudioSystem.getClip();
@@ -191,25 +213,37 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	
 	public void emoteSong(String song)
 	{
+		int affectState;
+		
 	    try
-	    {	   
+	    {	
 	    	emote = AudioSystem.getClip();
+	    	affectState = Global.affectiveState;
 	    	
-	    	switch(currEmotion)
+	    	switch(affectState)
 	    	{
-		    	case "angry" 	: 	emotion = inputFileAngry.toString();
-		    						break;
-		    	case "sad"		: 	emotion = inputFileSad.toString();
-									break;
-		    	case "happy"	: 	emotion = inputFileHappy.toString();
-		    						break;
+		    	case 1 	: 	emotion = inputFile1.toString();
+    						break;
+		    	case 2	: 	emotion = inputFile2.toString();
+							break;
+		    	case 3	: 	emotion = inputFile3.toString();
+    						break;
+		    	case 4	: 	emotion = inputFile4.toString();
+							break;
+		    	case 5	: 	emotion = inputFile5.toString();
+							break;
+		    	case 6	: 	emotion = inputFile6.toString();
+							break;
+		    	case 7	: 	emotion = inputFile7.toString();
+							break;
+		    	case 8	: 	emotion = inputFile8.toString();
+							break;
 	    	}
 
 	    	emote.open(AudioSystem.getAudioInputStream(new File(emotion)));
 	    	emote.start();
 	    	
 	    	firstSong = false;
-	        
 	    }
 	    catch (Exception exc)
 	    {
@@ -355,6 +389,10 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		
 		//playSound();
 		startRound();
+		
+        newEmotion = true;
+		isPlaying = false;    
+
 	}
 
 	void startRound()
@@ -507,12 +545,6 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		}
 		else if (k==2)	// eaten a powerDot
 		{
-			//testing spot for emotion change
-			randEmotion();
-			
-			newEmotion = true;
-			isPlaying = false;
-			
 			//Testing to make sure ghosts can be added in real time.
 			if(ghosts.size() < 8)
 			{
@@ -529,7 +561,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		}
 		else if (k==3)	//<------------------------ eaten a one-up
 		{
-			//playSound(eatPowerPellet);	//play eatPowerPellet Audio
+			playSound(life);	//play eatPowerPellet Audio
 			pacRemain++; //<<---------------------One-up
 			changePacRemain=1;
 		}
@@ -549,7 +581,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			if (k==1)	// kill pac
 			{
 				playSound(pacDie);	//play pacDie Audio
-				//emote.stop();		//stop emote song
+				emote.stop();		//stop emote song
 				pacRemain--;
 				changePacRemain=1;
 				gameState=DEADWAIT;	// stop the game
@@ -580,21 +612,6 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			}
 		}
 	}	
-	private void randEmotion() 
-	{
-		// TODO Auto-generated method stub
-		double rand = Math.random() * 3;
-		
-		rand = Math.floor(rand);
-		
-		if(rand == 0)
-			currEmotion = "sad";
-		else if (rand == 1)
-			currEmotion = "angry";
-		else
-			currEmotion = "happy";
-			
-	}
 
 	///////////////////////////////////////////
 	// this is the routine draw each frames
@@ -741,11 +758,12 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			if(newEmotion)
 					emotionChange();
 		}
-		//emote.stop();
 	}
 	public void emotionChange()
 	{
-		if (currEmotion != null)
+		int affectState = Global.affectiveState;
+		
+		if (affectState > 0)
 		{
 			if(firstSong)
 			{
@@ -818,19 +836,21 @@ implements Runnable, KeyListener, ActionListener, WindowListener
     /**********Multi-threading**********/
     
 	SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>()	{
-    @Override
-    protected Void doInBackground()	throws Exception{
-        while(true){
-            try {
-                AffectiveStateAccessor.getAffectiveState();
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
-            out.println(Global.affectiveState);
-            Thread.sleep(10000);			//wait 10 seconds before updating affective state
-        }
-        //return null;
-    }
-    };
-
+		@Override
+		protected Void doInBackground()	throws Exception{
+			while(true){
+				try {
+						AffectiveStateAccessor.getAffectiveState();
+						newEmotion = true;
+					} catch (UnknownHostException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				out.println(Global.affectiveState);
+				Thread.sleep(10000);			//wait 10 seconds before updating affective state
+			}
+			//return null;
+		}
+	};
+	
 }

@@ -17,7 +17,6 @@
  * along with javaiPacman.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package mikejyg.javaipacman.pacman;
 
 import java.util.Vector;
