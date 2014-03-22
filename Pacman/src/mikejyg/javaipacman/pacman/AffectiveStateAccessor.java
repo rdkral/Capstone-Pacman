@@ -20,6 +20,7 @@ import java.net.UnknownHostException;
  * 8 = interested
  */
 
+
 public class AffectiveStateAccessor {
 	public static void getAffectiveState()	throws UnknownHostException	{
 		//Define host, socket, and streams.

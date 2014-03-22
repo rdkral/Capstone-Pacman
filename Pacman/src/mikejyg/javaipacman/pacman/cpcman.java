@@ -74,6 +74,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	// game counters
 	final int PAcLIVE=3;
 	int numberOfGhosts = 4;
+	int maxNumberOfGhosts =8;
 	int pacRemain;
 	int changePacRemain;  // to signal redraw remaining pac
 
@@ -90,6 +91,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	//music
 	boolean isPlaying = false;
 	boolean firstSong = true;
+	boolean isNotFirstState = false;
 	
 	// score images
 	Image imgScore;
@@ -318,7 +320,6 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		 * initialize the amount of ghost in the game by allocating an array of the cghost class
 		 * Possibly make this a vector, to make it easier to add more ghosts.
 		 */
-		// 4 ghosts
 		ghosts = new Vector<cghost>();
 		for (int i=0; i<numberOfGhosts; i++)
 		{
@@ -545,17 +546,6 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		}
 		else if (k==2)	// eaten a powerDot
 		{
-			//Testing to make sure ghosts can be added in real time.
-			if(ghosts.size() < 8)
-			{
-				ghosts.addElement(new cghost(this, offScreenG, maze, Color.GRAY));
-				ghosts.lastElement().start(ghosts.size(), round);
-			}
-			else
-			{
-				// And deleted.
-				ghosts.remove(ghosts.size()-1);
-			}
 			playSound(eatPowerPellet);	//play eatPowerPellet Audio
 			scoreGhost=200;
 		}
@@ -676,7 +666,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		switch (e.getKeyCode())
 		{
 		case KeyEvent.VK_RIGHT:
-		case KeyEvent.VK_L:
+		//case KeyEvent.VK_L:
 			pacKeyDir=ctables.RIGHT;
 			// e.consume();
 			break;
@@ -756,9 +746,82 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			repaint();
 						
 			if(newEmotion)
-					emotionChange();
+			{
+				emotionChange();
+				adjustGhosts();
+			}
 		}
 	}
+	
+	public void adjustGhosts()
+	{	
+		if(isNotFirstState)
+		{
+			if(Global.affectiveState == 1)
+			{
+				addGhost();
+				if(ghosts.size() == maxNumberOfGhosts)
+				{
+					increaseSpeedOfAllGhosts();
+				}
+			}
+			else if (Global.affectiveState == 2)
+			{
+				addGhost();
+				increaseSpeedOfAllGhosts();
+			}
+			else if (Global.affectiveState == 3)
+			{
+				removeGhost();
+			
+			}
+			else 
+			{
+				increaseSpeedOfAllGhosts();
+				
+			}
+			
+			paintUpdate(this.getGraphics());
+			
+		}
+		else
+			isNotFirstState = true;
+	}
+	
+	public void addGhost()
+	{
+		if(ghosts.size() < maxNumberOfGhosts)
+		{
+			ghosts.addElement(new cghost(this, offScreenG, maze, Color.GRAY));
+			ghosts.lastElement().start(ghosts.size(), round);
+			repaint();
+		}
+	}
+	
+	public void removeGhost()
+	{
+		if (ghosts.size() > numberOfGhosts)
+		{
+			ghosts.remove(ghosts.size()-1);
+			repaint();
+		}
+	}
+	
+	public void increaseSpeedOfAllGhosts()
+	{
+		for(cghost ghost: ghosts)
+		{
+			ghost.speed.increaseSpeed();
+		}
+	}
+	public void decreaseSpeedOfAllGhosts()
+	{
+		for(cghost ghost: ghosts)
+		{
+			ghost.speed.decreaseSpeed();
+		}
+	}
+	
 	public void emotionChange()
 	{
 		int affectState = Global.affectiveState;

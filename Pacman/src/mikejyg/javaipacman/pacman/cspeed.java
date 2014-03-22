@@ -76,4 +76,20 @@ public class cspeed
 		}
 		return(0);
 	}
+	
+	public void increaseSpeed()
+	{
+		if(steps < frames)
+		{
+			steps++;
+		}
+	}
+	
+	public void decreaseSpeed()
+	{
+		if(steps > 0)
+		{
+			steps--;
+		}
+	}
 }
