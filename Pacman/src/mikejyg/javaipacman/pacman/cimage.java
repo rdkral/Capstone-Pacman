@@ -77,12 +77,12 @@ public class cimage
 		g.dispose();
 	}
 
-	public static void drawPac(Image img, int dir, int step)
+	public static void drawPac(Image img, int dir, int step, Color col)
 	{
 		Graphics g=img.getGraphics();
 		g.setColor(Color.black);
 		g.fillRect(0,0,18,18);
-		g.setColor(Color.yellow);
+		g.setColor(col);
 		int iCounter=0;
 		short mask=0x01;
 		for (int i=0; i<16; i++)

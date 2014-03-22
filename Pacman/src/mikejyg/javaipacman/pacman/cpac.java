@@ -63,7 +63,7 @@ public class cpac
 			for (int j=0; j<4; j++)
 			{
 				imagePac[i][j]=applet.createImage(18,18);
-				cimage.drawPac(imagePac[i][j],i,j);
+				cimage.drawPac(imagePac[i][j],i,j, Color.yellow);
 			}	
 	}
 
@@ -77,6 +77,28 @@ public class cpac
 
 	public void draw()
 	{
+		//Determine what color Pacman should be based on state
+		switch (Global.affectiveState) {
+	        case 1:  this.changeColor(Color.green);
+	                 break;
+	        case 2:  this.changeColor(Color.gray);
+	                 break;
+	        case 3:  this.changeColor(Color.red);
+	                 break;
+	        case 4:  this.changeColor(Color.blue);
+	                 break;
+	        case 5:  this.changeColor(Color.yellow);
+	                 break;
+	        case 6:  this.changeColor(Color.white);
+	                 break;
+	        case 7:  this.changeColor(Color.orange);
+	                 break;
+	        case 8:  this.changeColor(Color.green);
+	                 break;
+	        default: this.changeColor(Color.yellow);
+	                 break;
+	    }
+		
 		maze.DrawDot(iX/16, iY/16);
 		maze.DrawDot(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
 		maze.DrawOneUp(iX/16, iY/16); //<-------------------------------One-up
@@ -161,6 +183,18 @@ public class cpac
 		if ( (maze.iMaze[icol][iRow] & ( cmaze.WALL | cmaze.DOOR)) ==0)
 			return(true);
 		return(false);
+	}
+	
+	public void changeColor(Color col) {
+		// initialize pac and pac image
+		imagePac=new Image[4][4];
+		for (int i=0; i<4; i++) {
+			for (int j=0; j<4; j++)
+			{
+				imagePac[i][j]=applet.createImage(18,18);
+				cimage.drawPac(imagePac[i][j],i,j, col);
+			}	
+		}
 	}
 }
 
