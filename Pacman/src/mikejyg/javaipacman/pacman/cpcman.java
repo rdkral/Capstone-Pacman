@@ -112,6 +112,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	boolean isPlaying = false;
 	boolean firstSong = true;
 	boolean isNotFirstState = false;
+	int focusedState;
 	
 	// score images
 	Image imgScore;
@@ -296,11 +297,17 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			configFile.load(input);
 			
 			String stime = (configFile.getProperty("time"));
-			
+
 			ttime = Integer.parseInt(stime);
+			ttime = ttime * 1000;
+			
+			String focus = (configFile.getProperty("focusedState"));
+			
+			focusedState = Integer.parseInt(focus);
 		}
 		catch (IOException e)
 		{
+			ttime = 100000;
 			e.printStackTrace();
 		}
 		// init variables
@@ -644,7 +651,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			if (k==1)	// kill pac
 			{
 				playSound(pacDie);	//play pacDie Audio
-				emote.stop();		//stop emote song
+				if(newEmotion)
+					emote.stop();		//stop emote song
+				
 				pacRemain--;
 				changePacRemain=1;
 				gameState=DEADWAIT;	// stop the game
@@ -975,13 +984,18 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		@Override
 		protected Void doInBackground()	throws Exception{
 			while(true){
-				try {
-					AffectiveStateAccessor.getAffectiveState();
-					newEmotion = true;	
-					} catch (UnknownHostException e) {
+				if(focusedState == 0)
+				{
+					try {
+						AffectiveStateAccessor.getAffectiveState();
+						newEmotion = true;	
+						} catch (UnknownHostException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+						}
 				}
+				else
+					Global.affectiveState = focusedState;
 				out.println(Global.affectiveState);
 				Thread.sleep(ttime);			//wait 10 seconds before updating affective state
 			}
