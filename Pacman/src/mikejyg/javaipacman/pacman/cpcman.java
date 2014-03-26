@@ -569,7 +569,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 				
 			}
 			
-			g.drawImage(img, -32 + canvasWidth, canvasHeight - 16 + topOffset, null);
+			g.drawImage(img, -32 + canvasWidth, canvasHeight - 23 + topOffset, null);
 			
 			//Global.changedState = false; //@TODO
 		}
