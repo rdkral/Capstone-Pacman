@@ -19,21 +19,38 @@
 
 package mikejyg.javaipacman.pacman;
 
-import java.awt.*; 
-import java.awt.event.*;
+import static java.lang.System.out;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.Vector;
 
-import static java.lang.System.*;  //for printing the value so it can be seen
-
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.SwingWorker;	//for multi-threading
+import javax.swing.SwingWorker;
+//for printing the value so it can be seen
+//for multi-threading
 
 /**
  * the main class of the pacman game 
@@ -367,6 +384,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		imgScoreG.setColor(Color.green);
 		imgScoreG.setFont(new Font("Helvetica", Font.BOLD, 12));
 		imgScoreG.drawString("SCORE", 0, 14);
+
 	}
 
 	void startTimer()
@@ -521,6 +539,41 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 			changePacRemain=0;
 		}
+		
+		//If the state was recently updated then draw an emoji
+		if(Global.changedState) {
+			//Load an image from a file
+			BufferedImage img = null;
+			try {
+				switch (Global.affectiveState) {
+			        case 1:  img = ImageIO.read(new File("emojis/engaged.png"));
+			                 break;
+			        case 2:  img = ImageIO.read(new File("emojis/bored.png"));
+			                 break;
+			        case 3:  img = ImageIO.read(new File("emojis/frustrated.png"));
+			                 break;
+			        case 4:  img = ImageIO.read(new File("emojis/meditated.png"));
+			                 break;
+			        case 5:  img = ImageIO.read(new File("emojis/agreed.png"));
+			                 break;
+			        case 6:  img = ImageIO.read(new File("emojis/concentrated.png"));//
+			                 break;
+			        case 7:  img = ImageIO.read(new File("emojis/disagreed.png"));
+			                 break;
+			        case 8:  img = ImageIO.read(new File("emojis/interested.png"));
+			                 break;
+			        default: img = ImageIO.read(new File("emojis/agreed.png"));
+			                 break;
+				}
+			} catch (IOException e) {
+				
+			}
+			
+			g.drawImage(img, -32 + canvasWidth, canvasHeight - 16 + topOffset, null);
+			
+			//Global.changedState = false; //@TODO
+		}
+		
 	}
 
 	////////////////////////////////////////////////////////////

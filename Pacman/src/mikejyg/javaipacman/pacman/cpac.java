@@ -186,12 +186,9 @@ public class cpac
 	}
 	
 	public void changeColor(Color col) {
-		// initialize pac and pac image
-		imagePac=new Image[4][4];
+		//loop through pac man images and set them to the new color
 		for (int i=0; i<4; i++) {
-			for (int j=0; j<4; j++)
-			{
-				imagePac[i][j]=applet.createImage(18,18);
+			for (int j=0; j<4; j++) {
 				cimage.drawPac(imagePac[i][j],i,j, col);
 			}	
 		}

@@ -43,11 +43,13 @@ public class AffectiveStateAccessor {
             //Use string
             //Update Affective State
             Global.affectiveState=calculateState(response);
+            Global.changedState = true;
             
             //close socket
             socket.close();
             //Wait 10 Seconds
             //Thread.sleep(10000);
+            clogger.outputlog();
 		}
 		catch (Exception ex)	{
 			ex.printStackTrace();
@@ -72,6 +74,11 @@ public class AffectiveStateAccessor {
 		a = roundPAD(value2);		//round value 2 to 1 or -1
 		d = roundPAD(value3);		//round value 3 to 1 or -1
 		
+		//These values are used for logger
+		Global.p = p;
+		Global.a = a;
+		Global.d = d;
+		//--------------------------------
         
 		return calculatedPad(p, a, d);	//return calculated PAD value
 	}
