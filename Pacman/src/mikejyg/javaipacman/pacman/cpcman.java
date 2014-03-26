@@ -38,10 +38,13 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Properties;
 import java.util.Timer;
 import java.util.Vector;
 
@@ -126,6 +129,8 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 	final int WAITCOUNT=100;	// 100 frames for wait states
 	int wait;	// the counter
+	int ttime;
+	int temote;
 
 	// rounds
 	int round;  // the round of current game;
@@ -283,6 +288,21 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	{
 		super("P*C MAN");
 
+		Properties configFile = new Properties();
+		InputStream input = null;
+		
+		try{
+			input = new FileInputStream("pacconfig.properties");
+			configFile.load(input);
+			
+			String stime = (configFile.getProperty("time"));
+			
+			ttime = Integer.parseInt(stime);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 		// init variables
 		hiScore=0;
 
@@ -956,14 +976,14 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		protected Void doInBackground()	throws Exception{
 			while(true){
 				try {
-						AffectiveStateAccessor.getAffectiveState();
-						newEmotion = true;
+					AffectiveStateAccessor.getAffectiveState();
+					newEmotion = true;	
 					} catch (UnknownHostException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				out.println(Global.affectiveState);
-				Thread.sleep(10000);			//wait 10 seconds before updating affective state
+				Thread.sleep(ttime);			//wait 10 seconds before updating affective state
 			}
 			//return null;
 		}

@@ -58,7 +58,7 @@ class cpacmove
 		iValid=new int [4];
 		cPac=pac;
 
-		cGhost=new Vector(4);
+		cGhost=new Vector<cghost>(4);
 		for (int i=0; i<4; i++)
 			cGhost.setElementAt(ghost.elementAt(i), i);
 
