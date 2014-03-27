@@ -71,7 +71,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 	// for graphics
 	final int canvasWidth=368;
-	final int canvasHeight=288+1;
+	final int canvasHeight=288+1 + 20;
 
 	// the canvas starting point within the frame
 	int topOffset;
@@ -568,41 +568,12 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		}
 		
 		//If the state was recently updated then draw an emoji
-		if(Global.changedState) {
-			//Load an image from a file
-			BufferedImage img = null;
-			try {
-				switch (Global.affectiveState) {
-			        case 1:  img = ImageIO.read(new File("emojis/engaged.png"));
-			                 break;
-			        case 2:  img = ImageIO.read(new File("emojis/bored.png"));
-			                 break;
-			        case 3:  img = ImageIO.read(new File("emojis/frustrated.png"));
-			                 break;
-			        case 4:  img = ImageIO.read(new File("emojis/meditated.png"));
-			                 break;
-			        case 5:  img = ImageIO.read(new File("emojis/agreed.png"));
-			                 break;
-			        case 6:  img = ImageIO.read(new File("emojis/concentrated.png"));//
-			                 break;
-			        case 7:  img = ImageIO.read(new File("emojis/disagreed.png"));
-			                 break;
-			        case 8:  img = ImageIO.read(new File("emojis/interested.png"));
-			                 break;
-			        default: img = ImageIO.read(new File("emojis/agreed.png"));
-			                 break;
-				}
-			} catch (IOException e) {
-				
-			}
-			
-			g.drawImage(img, -32 + canvasWidth, canvasHeight - 23 + topOffset, null);
-			
-			//Global.changedState = false; //@TODO
-		}
+		drawEmoji(g);
 		
 	}
 
+	
+	
 	////////////////////////////////////////////////////////////
 	// controls moves
 	// this is the routine running at the background of drawings
@@ -975,6 +946,40 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 	public void setFinalized(boolean finalized) {
 		this.finalized = finalized;
+	}
+	
+	void drawEmoji(Graphics g) {
+		//Load an image from a file
+		BufferedImage img = null;
+		try {
+			switch (Global.affectiveState) {
+		        case 1:  img = ImageIO.read(new File("emojis/engaged.png"));
+		                 break;
+		        case 2:  img = ImageIO.read(new File("emojis/bored.png"));
+		                 break;
+		        case 3:  img = ImageIO.read(new File("emojis/frustrated.png"));
+		                 break;
+		        case 4:  img = ImageIO.read(new File("emojis/meditated.png"));
+		                 break;
+		        case 5:  img = ImageIO.read(new File("emojis/agreed.png"));
+		                 break;
+		        case 6:  img = ImageIO.read(new File("emojis/concentrated.png"));//
+		                 break;
+		        case 7:  img = ImageIO.read(new File("emojis/disagreed.png"));
+		                 break;
+		        case 8:  img = ImageIO.read(new File("emojis/interested.png"));
+		                 break;
+		        default: img = ImageIO.read(new File("emojis/agreed.png"));
+		                 break;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		g.drawImage(img, -32 + canvasWidth, canvasHeight - 23 + topOffset, null);
+		
+		//Global.changedState = false; //@TODO
+	
 	}
     
     

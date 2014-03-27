@@ -43,7 +43,6 @@ public class AffectiveStateAccessor {
             //Use string
             //Update Affective State
             Global.affectiveState=calculateState(response);
-            Global.changedState = true;
             
             //close socket
             socket.close();

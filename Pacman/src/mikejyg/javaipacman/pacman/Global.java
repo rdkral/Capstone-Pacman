@@ -11,7 +11,6 @@ public class Global {
 	 * 7 = disagreement
 	 * 8 = interested
 	 */
-	public static boolean changedState = true;
 	public static int affectiveState = 0;
 	public static int p = 0;
 	public static int a = 0;
