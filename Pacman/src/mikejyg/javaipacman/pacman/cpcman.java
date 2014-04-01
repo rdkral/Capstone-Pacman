@@ -106,7 +106,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	int changeHiScore;  // signal change of hi score
 
 	String currEmotion;	
-	boolean newEmotion = false;
+	static boolean newEmotion = false;
 	
 	//music
 	boolean isPlaying = false;
@@ -143,6 +143,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	MenuBar menuBar;
 	Menu help;
 	MenuItem about;
+	
+	static int prevState = 0;
+	static int currState;
 
 	// the direction specified by key
 	int pacKeyDir;
@@ -993,7 +996,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 				{
 					try {
 						AffectiveStateAccessor.getAffectiveState();
-						newEmotion = true;	
+						//newEmotion = true;	
 						} catch (UnknownHostException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

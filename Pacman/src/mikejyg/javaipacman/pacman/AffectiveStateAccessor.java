@@ -49,6 +49,17 @@ public class AffectiveStateAccessor {
             //Wait 10 Seconds
             //Thread.sleep(10000);
             clogger.outputlog();
+            
+            cpcman.currState = Global.affectiveState;
+            
+            if (cpcman.currState == cpcman.prevState)
+            	cpcman.newEmotion = false;
+            else
+            {
+            	cpcman.newEmotion = true;
+            	cpcman.prevState = cpcman.currState;
+            }
+            
 		}
 		catch (Exception ex)	{
 			ex.printStackTrace();
