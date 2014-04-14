@@ -597,6 +597,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 					158+ leftOffset, 0+ topOffset, this);
 
 			changeScore=0;
+			Global.score = score;
 		}
 
 		// update pac life info
@@ -906,6 +907,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			ghosts.lastElement().start(ghosts.size(), round);
 			//repaint();
 		}
+		Global.num_of_ghosts = ghosts.size() + 1;
 	}
 	
 	public void removeGhost()
@@ -915,6 +917,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			ghosts.remove(ghosts.size()-1);
 			//repaint();
 		}
+		Global.num_of_ghosts = ghosts.size() + 1;
 	}
 	
 	public void increaseSpeedOfAllGhosts()

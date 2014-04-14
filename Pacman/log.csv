@@ -1,0 +1,26 @@
+Timestamp,State,Pleasure,Arousal,Dominance,Number of Ghosts
+Mon Apr 14 14:26:01 MST 2014,Disagreement,-1,1,1,4
+Mon Apr 14 14:26:11 MST 2014,Disagreement,-1,1,1,4
+Mon Apr 14 14:26:21 MST 2014,Disagreement,-1,1,1,4
+Mon Apr 14 14:26:31 MST 2014,Disagreement,-1,1,1,4
+Mon Apr 14 14:26:41 MST 2014,Frustration,-1,1,-1,4
+Mon Apr 14 14:26:51 MST 2014,Disagreement,-1,1,1,5
+Mon Apr 14 14:27:01 MST 2014,Mediation,1,-1,1,5
+Mon Apr 14 14:27:11 MST 2014,Interested,1,1,-1,5
+Mon Apr 14 14:27:21 MST 2014,Agreement,1,-1,-1,5
+Mon Apr 14 14:27:31 MST 2014,Engagement,1,1,1,5
+Mon Apr 14 14:27:41 MST 2014,Agreement,1,-1,-1,5
+Mon Apr 14 14:27:51 MST 2014,Boredom,-1,-1,1,5
+Mon Apr 14 14:28:01 MST 2014,Frustration,-1,1,-1,6
+Mon Apr 14 14:28:11 MST 2014,Disagreement,-1,1,1,5
+Mon Apr 14 14:28:21 MST 2014,Mediation,1,-1,1,5
+Mon Apr 14 14:28:31 MST 2014,Interested,1,1,-1,5
+Mon Apr 14 14:28:41 MST 2014,Interested,1,1,-1,5
+Mon Apr 14 14:28:51 MST 2014,Concentration,-1,-1,-1,5
+Mon Apr 14 14:29:01 MST 2014,Boredom,-1,-1,1,5
+Mon Apr 14 14:29:11 MST 2014,Interested,1,1,-1,6
+Timestamp,State,Pleasure,Arousal,Dominance,Score,Number of Ghosts
+Mon Apr 14 14:33:56 MST 2014,Concentration,-1,-1,-1,0,4
+Mon Apr 14 14:34:06 MST 2014,Frustration,-1,1,-1,280,4
+Mon Apr 14 14:34:16 MST 2014,Concentration,-1,-1,-1,510,5
+Mon Apr 14 14:34:26 MST 2014,Engagement,1,1,1,710,5

@@ -15,6 +15,8 @@ public class Global {
 	public static int p = 0;
 	public static int a = 0;
 	public static int d = 0;
+	public static int num_of_ghosts = 4;
+	public static int score = 0;
 	
 	public static String affectiveStateToString() {
 		String state = new String();
