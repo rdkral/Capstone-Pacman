@@ -30,17 +30,18 @@ package mikejyg.javaipacman.pacman;
 public class cspeed
 {
 	// move steps per frames
-	int steps;
-	int frames;
+	double steps;
+	double frames;
+	int baseSpeed;
 
-	int frameCount;
-	int stepCount;
+	double frameCount;
+	double stepCount;
 
 	float frameStepRatio;
 
 	cspeed()
 	{
-		start(1,1);
+		start(baseSpeed,baseSpeed);
 	}
 
 	public void start(int stepsValue, int frameValue)
@@ -81,7 +82,7 @@ public class cspeed
 	{
 		if(steps < frames)
 		{
-			steps++;
+			steps+=.1;
 		}
 	}
 	
@@ -89,7 +90,7 @@ public class cspeed
 	{
 		if(steps > 0)
 		{
-			steps--;
+			steps-=.1;
 		}
 	}
 }

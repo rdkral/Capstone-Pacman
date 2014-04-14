@@ -59,6 +59,8 @@ public class AffectiveStateAccessor {
             	cpcman.newEmotion = true;
             	cpcman.prevState = cpcman.currState;
             }
+            if(cpcman.isNotFirstState)
+            	cpcman.shouldUpdateGhost = true;
             
 		}
 		catch (Exception ex)	{

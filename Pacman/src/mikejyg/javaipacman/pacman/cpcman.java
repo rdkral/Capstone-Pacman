@@ -107,6 +107,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 	String currEmotion;	
 	static boolean newEmotion = false;
+	static boolean shouldUpdateGhost = false;
 	static boolean engagementEnable,boredomEnable,frustrationEnable,
 				   meditationEnable, agreementEnable,concentratingEnable, 
 				   disagreementEnable, interestedEnable = true;
@@ -114,8 +115,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	//music
 	boolean isPlaying = false;
 	boolean firstSong = true;
-	boolean isNotFirstState = false;
+	static boolean isNotFirstState = false;
 	int focusedState;
+	int ghostsBaseSpeed;
 	
 	// score images
 	Image imgScore;
@@ -311,6 +313,11 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			
 			focusedState = Integer.parseInt(focus);
 			
+			String ghostBaseSpeed = (configFile.getProperty("ghostBaseSpeed"));
+			ghostsBaseSpeed = Integer.parseInt(ghostBaseSpeed);
+			
+					
+			
 			/*
 			String engagedEnable = (configFile.getProperty("engagement").toLowerCase());
 			if(engagedEnable.equals("off"))
@@ -497,7 +504,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		pacKeyDir=ctables.DOWN;
 		for (int i=0; i<ghosts.size(); i++)
 		{	
+			ghosts.elementAt(i).speed.baseSpeed = ghostsBaseSpeed;
 			ghosts.elementAt(i).start(i,round);
+			
 		}
 		
 
@@ -836,13 +845,11 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			}
 
 			signalMove++;
-			repaint();
-						
 			if(newEmotion)
-			{
 				emotionChange();
-				adjustGhosts();
-			}
+			adjustGhosts();
+			repaint();			
+			
 		}
 	}
 	
@@ -850,29 +857,39 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	{	
 		if(isNotFirstState)
 		{
-			if(Global.affectiveState == 1)
+			if((Global.affectiveState == 1) && shouldUpdateGhost)
 			{
-				addGhost();
-				if(ghosts.size() == maxNumberOfGhosts)
-				{
 					increaseSpeedOfAllGhosts();
-				}
 			}
-			else if (Global.affectiveState == 2)
+			else if ((Global.affectiveState == 2) && shouldUpdateGhost)
 			{
+				//Increase music speed
+				//Load harder lvl
 				addGhost();
-				increaseSpeedOfAllGhosts();
+				
 			}
-			else if (Global.affectiveState == 3)
+			else if ((Global.affectiveState == 3) && shouldUpdateGhost)
 			{
-				removeGhost();
+				//Slow Down music
+				//Load Easier map
+				if(ghosts.size() > 3)
+					removeGhost();
+				decreaseSpeedOfAllGhosts();
+				decreaseSpeedOfAllGhosts();
 			
 			}
 			else 
 			{
-				increaseSpeedOfAllGhosts();
+				if(shouldUpdateGhost)
+				{
+					increaseSpeedOfAllGhosts();
+					increaseSpeedOfAllGhosts();
+					increaseSpeedOfAllGhosts();
+					increaseSpeedOfAllGhosts();
+				}
 				
 			}
+			shouldUpdateGhost = false;
 			
 			paintUpdate(this.getGraphics());
 			
@@ -887,7 +904,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		{
 			ghosts.addElement(new cghost(this, offScreenG, maze, Color.GRAY));
 			ghosts.lastElement().start(ghosts.size(), round);
-			repaint();
+			//repaint();
 		}
 	}
 	
@@ -896,7 +913,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		if (ghosts.size() > numberOfGhosts)
 		{
 			ghosts.remove(ghosts.size()-1);
-			repaint();
+			//repaint();
 		}
 	}
 	
@@ -905,6 +922,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		for(cghost ghost: ghosts)
 		{
 			ghost.speed.increaseSpeed();
+
 		}
 	}
 	public void decreaseSpeedOfAllGhosts()
