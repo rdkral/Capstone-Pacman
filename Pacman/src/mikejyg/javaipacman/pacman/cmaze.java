@@ -31,6 +31,9 @@ public class cmaze
 	static final int DOOR=2;
 	static final int DOT=4;
 	static final int ONE_UP=6; //<-----------One up
+	static final int ORANGE=7;
+	static final int MELON=9;
+	static final int GRAPE=10;
 	static final int POWER_DOT=8;
 
 	static final int HEIGHT=16;
@@ -52,6 +55,9 @@ public class cmaze
 	
 	// the one-up image
 	Image imageOneUp; //<---------------------------One-up
+	Image imageOrange;
+	Image imageMelon;
+	Image imageGrape;
 	
 	// total dots left
 	int iTotalDotcount;
@@ -69,6 +75,9 @@ public class cmaze
 		imageMaze=applet.createImage(iWidth, iHeight);
 		imageDot=applet.createImage(2,2);
 		imageOneUp = applet.createImage(16, 16); //<---------------One-up
+		imageOrange = applet.createImage(16,16);
+		imageMelon = applet.createImage(16,16);
+		imageGrape = applet.createImage(16,16);
 
 		// create data
 		iMaze=new int[HEIGHT][WIDTH];
@@ -76,20 +85,28 @@ public class cmaze
 
 	public void start()
 	{
-		int n = 6;
+		int n = 10;
 		Random generator = new Random();
 		int level = generator.nextInt(n); // <-- random number generator here
-		//level=0;
-		if (level == 0)
+		//level=6;
+		if (level == 1)
 			ctables.MazeDefine = ctables.MazeDefine_lvl1;
-		else if (level == 1)
-			ctables.MazeDefine = ctables.MazeDefine_lvl2;
 		else if (level == 2)
-			ctables.MazeDefine = ctables.MazeDefine_lvl3;
+			ctables.MazeDefine = ctables.MazeDefine_lvl2;
 		else if (level == 3)
-			ctables.MazeDefine = ctables.MazeDefine_lvl4;
+			ctables.MazeDefine = ctables.MazeDefine_lvl3;
 		else if (level == 4)
+			ctables.MazeDefine = ctables.MazeDefine_lvl4;
+		else if (level == 5)
 			ctables.MazeDefine = ctables.MazeDefine_lvl5;
+		else if (level == 6)
+			ctables.MazeDefine = ctables.MazeDefine_lvl6;
+		else if (level == 7)
+			ctables.MazeDefine = ctables.MazeDefine_lvl7;
+		else if (level == 8)
+			ctables.MazeDefine = ctables.MazeDefine_lvl8;
+		else if (level == 9)
+			ctables.MazeDefine = ctables.MazeDefine_lvl9;
 		/*else
 			ctables.MazeDefine = ctables.MazeDefine;*/
 		
@@ -119,6 +136,15 @@ public class cmaze
 				case '1': //<---------------One-up
 					k=ONE_UP; //<---------------One-up
 					break; //<---------------One-up
+				case 'R':
+					k=ORANGE; 
+					break;
+				case 'M':
+					k = MELON;
+					break;
+				case 'G':
+					k = GRAPE;
+					break;
 				default:
 					k=DOT;
 					iTotalDotcount++;
@@ -135,6 +161,9 @@ public class cmaze
 		graphics.drawImage(imageMaze,0,0,applet);
 		drawDots();
 		drawOneUp(); //<---------------One-up
+		drawOrange();
+		drawMelon();
+		drawGrape();
 	}
 
 	void drawDots()	// on the offscreen
@@ -160,11 +189,51 @@ public class cmaze
 			}
 	}
 	
+	void drawOrange() 
+	{
+		int i,j;
+		for (i=0; i<HEIGHT; i++)
+			for (j=0; j<WIDTH; j++)
+			{
+				if (iMaze[i][j]==ORANGE)
+					graphics.drawImage(imageOrange, j*16,i*16,applet);
+			}
+	}
+	
+	void drawMelon() 
+	{
+		int i,j;
+		for (i=0; i<HEIGHT; i++)
+			for (j=0; j<WIDTH; j++)
+			{
+				if (iMaze[i][j]==MELON)
+					graphics.drawImage(imageMelon, j*16,i*16,applet);
+			}
+	}
+	
+	void drawGrape() 
+	{
+		int i,j;
+		for (i=0; i<HEIGHT; i++)
+			for (j=0; j<WIDTH; j++)
+			{
+				if (iMaze[i][j]==GRAPE)
+					graphics.drawImage(imageGrape, j*16,i*16,applet);
+			}
+	}
+	
+	
+	
+	
 	void createImage()
 	{
 		// create the image of a dot
 		cimage.drawDot(imageDot);
 		cimage.drawOneUp(imageOneUp); //<--------------------One-up
+		cimage.drawOrange(imageOrange);
+		cimage.drawMelon(imageMelon);
+		cimage.drawGrape(imageGrape);
+		
 		// create the image of the maze
 		Graphics gmaze=imageMaze.getGraphics();
 
@@ -185,8 +254,23 @@ public class cmaze
 	{
 		if (iMaze[iRow][icol]==ONE_UP)
 			graphics.drawImage(imageOneUp, icol*16,iRow*16,applet);
+	}
+	
+	public void DrawOrange(int icol, int iRow) 
+	{
+		if (iMaze[iRow][icol]==ORANGE)
+			graphics.drawImage(imageOneUp, icol*16,iRow*16,applet);
 	}	
-
+	public void DrawMelon(int icol, int iRow) 
+	{
+		if (iMaze[iRow][icol]==MELON)
+			graphics.drawImage(imageOneUp, icol*16,iRow*16,applet);
+	}	
+	public void DrawGrape(int icol, int iRow) 
+	{
+		if (iMaze[iRow][icol]==GRAPE)
+			graphics.drawImage(imageOneUp, icol*16,iRow*16,applet);
+	}	
 	void DrawWall(Graphics g)
 	{
 		int i,j;

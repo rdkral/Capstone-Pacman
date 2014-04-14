@@ -107,6 +107,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 	String currEmotion;	
 	static boolean newEmotion = false;
+	static boolean engagementEnable,boredomEnable,frustrationEnable,
+				   meditationEnable, agreementEnable,concentratingEnable, 
+				   disagreementEnable, interestedEnable = true;
 	
 	//music
 	boolean isPlaying = false;
@@ -307,6 +310,40 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			String focus = (configFile.getProperty("focusedState"));
 			
 			focusedState = Integer.parseInt(focus);
+			
+			/*
+			String engagedEnable = (configFile.getProperty("engagement").toLowerCase());
+			if(engagedEnable.equals("off"))
+				engagementEnable = false;
+			
+			String boredomConfig = (configFile.getProperty("boredom").toLowerCase());
+			if(boredomConfig.contains("off"))
+				boredomEnable = false;
+			
+			String frustrationConfig = (configFile.getProperty("frustration").toLowerCase());
+			if(frustrationConfig.equals("off"))
+				frustrationEnable = false;
+				
+			String meditationConfig = (configFile.getProperty("meditation").toLowerCase());
+			if(meditationConfig.equals("off"))
+					meditationEnable = false;
+			
+			String agreementConfig = (configFile.getProperty("agreement").toLowerCase());
+			if(agreementConfig.equals("off"))
+					agreementEnable = false;
+			
+			String concentratingConfig = (configFile.getProperty("concentrating").toLowerCase());
+			if(concentratingConfig.equals("off"))
+					concentratingEnable = false;
+			
+			String disagreementConfig = (configFile.getProperty("disagreement").toLowerCase());
+			if(disagreementConfig.equals("off"))
+					disagreementEnable = false;
+			
+			String interestedConfig = (configFile.getProperty("interested").toLowerCase());
+			if(interestedConfig.equals("off"))
+					interestedEnable = false;
+			*/
 		}
 		catch (IOException e)
 		{

@@ -160,6 +160,18 @@ public class cpac
 				eaten=3;
 				maze.iMaze[iY/16][iX/16]=cmaze.BLANK;
 				break;
+			case cmaze.ORANGE: 
+				eaten=4;
+				maze.iMaze[iY/16][iX/16]=cmaze.BLANK;
+				break;
+			case cmaze.MELON: 
+				eaten=5;
+				maze.iMaze[iY/16][iX/16]=cmaze.BLANK;
+				break;
+			case cmaze.GRAPE: 
+				eaten=6;
+				maze.iMaze[iY/16][iX/16]=cmaze.BLANK;
+				break;
 			
 			}
 

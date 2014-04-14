@@ -111,35 +111,37 @@ public class AffectiveStateAccessor {
 		switch (p){
             case 1:	if(a == 1){
                 if(d == 1){
-                    return 1;	//P=1,A=1,D=1
+                	//if(cpcman.engagementEnable)
+                		return 1;	//P=1,A=1,D=1
                 }
-                return 8;		//P=1,A=1,D=-1
+                //if(cpcman.interestedEnable)
+                	return 8;		//P=1,A=1,D=-1
             }
 				
 				if(d == 1){
-					return 4;		//P=1,A=-1,D=1
+				//	if(cpcman.engagementEnable)
+						return 4;		//P=1,A=-1,D=1
 				}
-				return 5;			//P=1,A=-1,D=-1
+				//if(cpcman.agreementEnable)
+					return 5;			//P=1,A=-1,D=-1
             case -1: if(a == 1){
                 if(d == 1){
-                    return 7;	//P=-1,A=1,D=1
+                	//if(cpcman.disagreementEnable)
+                		return 7;	//P=-1,A=1,D=1
                 }
-                return 3;		//P=-1,A=1,D=-1
+                //if(cpcman.frustrationEnable)
+                	return 3;		//P=-1,A=1,D=-1
             }
 				
 				if(d == 1){
-					return 2;		//P=-1,A=-1,D=1
+				//	if(cpcman.boredomEnable)
+						return 2;		//P=-1,A=-1,D=1
 				}
-				return 6;			//P=-1,A=-1,D-1
+				//if(cpcman.concentratingEnable)
+					return 6;			//P=-1,A=-1,D-1
 		}
 		
 		return 0;	//return value from 1-8 to represent affective state (see table above)
 	}
     
 }
-
-
-
-
-
-
