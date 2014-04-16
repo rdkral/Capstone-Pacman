@@ -116,8 +116,19 @@ public class cghost
 	{
 		maze.DrawDot(iX/16, iY/16);
 		maze.DrawDot(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
-		maze.DrawOneUp(iX/16, iY/16); //<---------------------------------One-up
-		maze.DrawOneUp(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0)); //<-----One-up
+		
+		maze.DrawOneUp(iX / 16, iY / 16); // <---------------------------------One-up
+		maze.DrawOneUp(iX / 16 + (iX % 16 > 0 ? 1 : 0), iY / 16+ (iY % 16 > 0 ? 1 : 0)); // <-----One-up
+		
+		maze.DrawGrape(iX/16, iY/16);
+		maze.DrawGrape(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
+		
+		maze.DrawMelon(iX/16, iY/16);
+		maze.DrawMelon(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
+		
+		maze.DrawOrange(iX/16, iY/16);
+		maze.DrawOrange(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
+		
 
 		if (iStatus==BLIND && iBlink==1 && iBlindCount%32<16)
 			graphics.drawImage(imageGhost, iX-1, iY-1, applet);

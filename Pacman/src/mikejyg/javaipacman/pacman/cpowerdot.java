@@ -27,11 +27,11 @@ public class cpowerdot
 	final int iX[]={1,19,1,19};
 	final int iY[]={2,2,13,13};
 
-	final int iShowCount=32;
-	final int iHideCount=16;
+	final static int iShowCount=32;
+	final static int iHideCount=16;
 
-	int frameCount;
-	int showStatus;
+	static int frameCount;
+	static int showStatus;
 
 	int iValid[];
 
@@ -64,7 +64,7 @@ public class cpowerdot
 		Graphics imageG=imageBlank.getGraphics();
 		imageG.setColor(Color.black);
 		imageG.fillRect(0,0,16,16);
-
+		
 		frameCount=iShowCount;
 		showStatus=1;	// show
 	}
@@ -114,7 +114,10 @@ public class cpowerdot
 		for (int i=0; i<4; i++)
 		{
 			if (iValid[i]==1 && showStatus==1)
-				graphics.drawImage(imagePowerDot,iX[i]*16, iY[i]*16, applet);
+				if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
+					graphics.drawImage(imagePowerDot,iX[i]*16, iY[i]*16, applet);
+				else
+					graphics.drawImage(imageBlank, iX[i]*16, iY[i]*16, applet);
 			else
 				graphics.drawImage(imageBlank, iX[i]*16, iY[i]*16, applet);
 		}

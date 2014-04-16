@@ -102,8 +102,14 @@ public class cpac
 		
 		maze.DrawDot(iX/16, iY/16);
 		maze.DrawDot(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
-		maze.DrawOneUp(iX/16, iY/16); //<-------------------------------One-up
-		maze.DrawOneUp(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0)); //<---One-up
+		maze.DrawOneUp(iX / 16, iY / 16); // <-------------------------------One-up
+		maze.DrawOneUp(iX / 16 + (iX % 16 > 0 ? 1 : 0), iY / 16 + (iY % 16 > 0 ? 1 : 0)); // <---One-up
+		maze.DrawGrape(iX/16, iY/16);
+		maze.DrawGrape(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
+		maze.DrawMelon(iX/16, iY/16);
+		maze.DrawMelon(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
+		maze.DrawOrange(iX/16, iY/16);
+		maze.DrawOrange(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
 
 		int iImageStep=(iX%16 + iY%16)/2; 	// determine shape of PAc
 		if (iImageStep<4)
@@ -153,25 +159,50 @@ public class cpac
 				iDotWait=DOT_WAIT;
 				break;
 			case cmaze.POWER_DOT:
-				eaten=2;
-				powerDot.eat(iX/16, iY/16);
-				maze.iMaze[iY/16][iX/16]=cmaze.BLANK;
+				//int affectiveState = 2;
+				//if (affectiveState == 3 || affectiveState == 7)
+				if (Global.affectiveState == 3 || Global.affectiveState == 7)
+				{
+					eaten = 2;
+					powerDot.eat(iX / 16, iY / 16);
+					maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
+				}
 				break;
 			case cmaze.ONE_UP: //<-----------------One-up
-				eaten=3;
-				maze.iMaze[iY/16][iX/16]=cmaze.BLANK;
+				//int affectiveState = 2;
+				//if (affectiveState == 3 || affectiveState == 7)
+				if (Global.affectiveState == 3 || Global.affectiveState == 7)
+				{
+					eaten = 3;
+					maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
+				}
 				break;
-			case cmaze.ORANGE: 
-				eaten=4;
-				maze.iMaze[iY/16][iX/16]=cmaze.BLANK;
+			case cmaze.ORANGE:
+				// int affectiveState = 2;
+				// if (affectiveState == 3 || affectiveState == 7)
+				if (Global.affectiveState == 3 || Global.affectiveState == 7)
+				{
+					eaten = 4;
+					maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
+				}
 				break;
-			case cmaze.MELON: 
-				eaten=5;
-				maze.iMaze[iY/16][iX/16]=cmaze.BLANK;
+			case cmaze.MELON:
+				// int affectiveState = 2;
+				// if (affectiveState == 3 || affectiveState == 7)
+				if (Global.affectiveState == 3 || Global.affectiveState == 7)
+				{
+					eaten = 5;
+					maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
+				}
 				break;
-			case cmaze.GRAPE: 
-				eaten=6;
-				maze.iMaze[iY/16][iX/16]=cmaze.BLANK;
+			case cmaze.GRAPE:
+				// int affectiveState = 2;
+				// if (affectiveState == 3 || affectiveState == 7)
+				if (Global.affectiveState == 3 || Global.affectiveState == 7)
+				{
+					eaten = 6;
+					maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
+				}
 				break;
 			
 			}
