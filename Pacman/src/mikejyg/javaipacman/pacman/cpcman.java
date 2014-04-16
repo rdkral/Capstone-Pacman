@@ -115,9 +115,11 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	//music
 	boolean isPlaying = false;
 	boolean firstSong = true;
+	boolean shouldIncreaseGhostSpeed = true;
 	static boolean isNotFirstState = false;
 	int focusedState;
 	int ghostsBaseSpeed;
+	int pacBaseSpeed;
 	
 	// score images
 	Image imgScore;
@@ -316,6 +318,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			String ghostBaseSpeed = (configFile.getProperty("ghostBaseSpeed"));
 			ghostsBaseSpeed = Integer.parseInt(ghostBaseSpeed);
 			
+			String pacSpeed = (configFile.getProperty("pacBaseSpeed"));
+			pacBaseSpeed = Integer.parseInt(pacSpeed);
+			
 					
 			
 			/*
@@ -499,7 +504,8 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		}
 
 		maze.draw();	// draw maze in off screen buffer
-
+		
+		pac.speed = pacBaseSpeed;
 		pac.start();
 		pacKeyDir=ctables.DOWN;
 		for (int i=0; i<ghosts.size(); i++)
@@ -634,75 +640,91 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 		int oldScore=score;
 
+		moveGhosts();
+		
 
-		for (int i=0; i<ghosts.size(); i++)
-			ghosts.elementAt(i).move(pac.iX, pac.iY, pac.iDir);
+		for(int index = 0; index <pac.speed; index++)
+		{
 
-		k=pac.move(pacKeyDir);
+			k=pac.move(pacKeyDir);
 
-		if (k==1)	// eaten a dot
-		{
-			changeScore=1;
-			score+= 10 * ((round+1)/2) ;
-		}
-		else if (k==2)	// eaten a powerDot
-		{
-			playSound(eatPowerPellet);	//play eatPowerPellet Audio
-			scoreGhost=200;
-		}
-		else if (k==3)	//<------------------------ eaten a one-up
-		{
-			playSound(life);	//play eatPowerPellet Audio
-			pacRemain++; //<<---------------------One-up
-			changePacRemain=1;
-		}
-
-		if (maze.iTotalDotcount==0)
-		{
-			gameState=DEADWAIT;
-			wait=WAITCOUNT;
-			newMaze=true;
-			round++;
-			return;
-		}
-
-		for (int i=0; i<ghosts.size(); i++)
-		{
-			k=ghosts.elementAt(i).testCollision(pac.iX, pac.iY);
-			if (k==1)	// kill pac
+			if (k==1)	// eaten a dot
 			{
-				playSound(pacDie);	//play pacDie Audio
-				if(newEmotion)
-					emote.stop();		//stop emote song
-				
-				pacRemain--;
-				changePacRemain=1;
-				gameState=DEADWAIT;	// stop the game
-				wait=WAITCOUNT;
-				return;	
-			}
-			else if (k==2)	// caught by pac
-			{
-				playSound(eatGhost);	//play eatGhost Audio
-				score+= scoreGhost * ((round+1)/2) ;
 				changeScore=1;
-				scoreGhost*=2;
-			}		
-		}
-
-		if (score>hiScore)
-		{
-			hiScore=score;
-			changeHiScore=1;
-		}
-
-		if ( changeScore==1 )
-		{
-			if ( score/10000 - oldScore/10000 > 0 )
+				score+= 10 * ((round+1)/2) ;
+			}
+			else if (k==2)	// eaten a powerDot
 			{
-				pacRemain++;			// bonus
+				playSound(eatPowerPellet);	//play eatPowerPellet Audio
+				scoreGhost=200;
+			}
+			else if (k==3)	//<------------------------ eaten a one-up
+			{
+				playSound(life);	//play eatPowerPellet Audio
+				pacRemain++; //<<---------------------One-up
 				changePacRemain=1;
 			}
+
+			if (maze.iTotalDotcount==0)
+			{
+				gameState=DEADWAIT;
+				wait=WAITCOUNT;
+				newMaze=true;
+				round++;
+				return;
+			}
+
+			for (int i=0; i<ghosts.size(); i++)
+			{
+				k=ghosts.elementAt(i).testCollision(pac.iX, pac.iY);
+				if (k==1)	// kill pac
+				{
+					playSound(pacDie);	//play pacDie Audio
+					if(newEmotion)
+						emote.stop();		//stop emote song
+				
+					pacRemain--;
+					changePacRemain=1;
+					gameState=DEADWAIT;	// stop the game
+					wait=WAITCOUNT;
+					return;	
+				}
+				else if (k==2)	// caught by pac
+				{
+					playSound(eatGhost);	//play eatGhost Audio
+					score+= scoreGhost * ((round+1)/2) ;
+					changeScore=1;
+					scoreGhost*=2;
+				}		
+			}
+
+			if (score>hiScore)
+			{
+				hiScore=score;
+				changeHiScore=1;
+			}
+
+			if ( changeScore==1 )
+			{
+				if ( score/10000 - oldScore/10000 > 0 )
+				{
+					pacRemain++;			// bonus
+					changePacRemain=1;
+				}
+			}
+			//repaint();
+			paintUpdate(this.getGraphics());
+		
+		}
+	}
+
+	public void moveGhosts()
+	{
+		for(int index = 0; index < ghosts.elementAt(1).speed.baseSpeed; index++)
+		{
+			for (int i=0; i<ghosts.size(); i++)
+				ghosts.elementAt(i).move(pac.iX, pac.iY, pac.iDir);
+			paintUpdate(this.getGraphics());
 		}
 	}	
 
@@ -848,6 +870,10 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			signalMove++;
 			if(newEmotion)
 				emotionChange();
+			if(pac.speed > 1)
+				shouldIncreaseGhostSpeed = false;
+			else
+				shouldIncreaseGhostSpeed = true;
 			adjustGhosts();
 			repaint();			
 			
@@ -860,7 +886,16 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		{
 			if((Global.affectiveState == 1) && shouldUpdateGhost)
 			{
-					increaseSpeedOfAllGhosts();
+				if(shouldIncreaseGhostSpeed == false)//pac.speed >1)	
+					decreasePacSpeed();
+				else
+					{
+						if(shouldIncreaseGhostSpeed)
+						{
+							increaseSpeedOfAllGhosts();
+						}
+						shouldIncreaseGhostSpeed = false;
+					}
 			}
 			else if ((Global.affectiveState == 2) && shouldUpdateGhost)
 			{
@@ -875,17 +910,13 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 				//Load Easier map
 				if(ghosts.size() > 3)
 					removeGhost();
-				decreaseSpeedOfAllGhosts();
-				decreaseSpeedOfAllGhosts();
+				increasePacSpeed();
 			
 			}
 			else 
 			{
 				if(shouldUpdateGhost)
 				{
-					increaseSpeedOfAllGhosts();
-					increaseSpeedOfAllGhosts();
-					increaseSpeedOfAllGhosts();
 					increaseSpeedOfAllGhosts();
 				}
 				
@@ -920,11 +951,23 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		Global.num_of_ghosts = ghosts.size() + 1;
 	}
 	
+	public void increasePacSpeed()
+	{
+		if(pac.speed < 4)
+			pac.speed++;
+	}
+	
+	public void decreasePacSpeed()
+	{
+		if(pac.speed >0)
+			pac.speed--;
+	}
 	public void increaseSpeedOfAllGhosts()
 	{
 		for(cghost ghost: ghosts)
 		{
-			ghost.speed.increaseSpeed();
+			if(ghost.speed.baseSpeed <4)
+				ghost.speed.increaseSpeed();
 
 		}
 	}
@@ -932,7 +975,8 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	{
 		for(cghost ghost: ghosts)
 		{
-			ghost.speed.decreaseSpeed();
+			if(ghost.speed.baseSpeed >0)
+				ghost.speed.decreaseSpeed();
 		}
 	}
 	

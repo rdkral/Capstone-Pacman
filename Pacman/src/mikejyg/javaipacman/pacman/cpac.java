@@ -32,7 +32,7 @@ public class cpac
 	int iX, iY;
 	// current direction
 	int iDir;
-
+	int speed;
 	// the applet this object is associated to
 	Window applet;
 	Graphics graphics;
@@ -73,6 +73,7 @@ public class cpac
 		iY=10*16;
 		iDir=1;		// downward, illegal and won't move
 		iDotWait=0;
+		speed=1;
 	}
 
 	public void draw()

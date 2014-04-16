@@ -41,7 +41,7 @@ public class cspeed
 
 	cspeed()
 	{
-		start(baseSpeed,baseSpeed);
+		start(1,1);
 	}
 
 	public void start(int stepsValue, int frameValue)
@@ -80,17 +80,19 @@ public class cspeed
 	
 	public void increaseSpeed()
 	{
-		if(steps < frames)
-		{
-			steps+=.1;
-		}
+		baseSpeed++;
+//		if(steps < frames)
+//		{
+//			steps+=.5;
+//		}
 	}
 	
 	public void decreaseSpeed()
 	{
-		if(steps > 0)
-		{
-			steps-=.1;
-		}
+		baseSpeed--;
+//		if(steps > 0)
+//		{
+//			steps-=.5;
+//		}
 	}
 }
