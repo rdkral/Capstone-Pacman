@@ -647,6 +647,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		{
 
 			k=pac.move(pacKeyDir);
+			Global.dots_remaining = maze.iTotalDotcount;
 
 			if (k==1)	// eaten a dot
 			{
@@ -668,6 +669,11 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			if (maze.iTotalDotcount==0)
 			{
 				gameState=DEADWAIT;
+				try {
+					clogger.outputdeath();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				wait=WAITCOUNT;
 				newMaze=true;
 				round++;
