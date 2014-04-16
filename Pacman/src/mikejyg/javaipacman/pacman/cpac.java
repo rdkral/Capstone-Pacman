@@ -37,6 +37,7 @@ public class cpac
 	Window applet;
 	Graphics graphics;
 
+	
 	// the pac image
 	Image [][] imagePac;
 
@@ -121,6 +122,7 @@ public class cpac
 
 	// return 1 if eat a dot
 	// return 2 if eat power dot
+	@SuppressWarnings("static-access")
 	public int move(int iNextDir)
 	{
 		int eaten=0;
@@ -148,63 +150,57 @@ public class cpac
 		}
 		if (iX%16==0 && iY%16==0)
 		{
-
 			// see whether has eaten something
 			switch (maze.iMaze[iY/16][iX/16])
 			{
-			case cmaze.DOT:
-				eaten=1;
-				maze.iMaze[iY/16][iX/16]=cmaze.BLANK;	// eat dot
-				maze.iTotalDotcount--;
-				iDotWait=DOT_WAIT;
-				break;
-			case cmaze.POWER_DOT:
-				//int affectiveState = 2;
-				//if (affectiveState == 3 || affectiveState == 7)
-				if (Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
-				{
-					eaten = 2;
-					powerDot.eat(iX / 16, iY / 16);
-					maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
-				}
-				break;
-			case cmaze.ONE_UP: //<-----------------One-up
-				//int affectiveState = 2;
-				//if (affectiveState == 3 || affectiveState == 7)
-				if (Global.affectiveState == 3 || Global.affectiveState == 7)
-				{
-					eaten = 3;
-					maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
-				}
-				break;
-			case cmaze.ORANGE:
-				// int affectiveState = 2;
-				// if (affectiveState == 3 || affectiveState == 7)
-				if (Global.affectiveState == 3 || Global.affectiveState == 7)
-				{
-					eaten = 4;
-					maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
-				}
-				break;
-			case cmaze.MELON:
-				// int affectiveState = 2;
-				// if (affectiveState == 3 || affectiveState == 7)
-				if (Global.affectiveState == 3 || Global.affectiveState == 7)
-				{
-					eaten = 5;
-					maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
-				}
-				break;
-			case cmaze.GRAPE:
-				// int affectiveState = 2;
-				// if (affectiveState == 3 || affectiveState == 7)
-				if (Global.affectiveState == 3 || Global.affectiveState == 7)
-				{
-					eaten = 6;
-					maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
-				}
-				break;
-			
+				case cmaze.DOT:
+					eaten=1;
+					maze.iMaze[iY/16][iX/16]=cmaze.BLANK;	// eat dot
+					maze.iTotalDotcount--;
+					iDotWait=DOT_WAIT;
+					break;
+				case cmaze.POWER_DOT:
+					if (powerDot.powerDotEnabled)
+					{
+						eaten = 2;
+						powerDot.eat(iX / 16, iY / 16);
+						maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
+					}
+					break;
+				case cmaze.ONE_UP: //<-----------------One-up
+					//int affectiveState = 2;
+					//if (affectiveState == 3 || affectiveState == 7)
+					if (Global.affectiveState == 3 || Global.affectiveState == 7)
+					{
+						eaten = 3;
+						maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
+					}
+					break;
+				case cmaze.ORANGE:
+						
+						eaten = 4;
+						powerDot.fruitEat(iY / 16, iX / 16);
+						maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
+					
+					break;
+				case cmaze.MELON:
+					// int affectiveState = 2;
+					// if (affectiveState == 3 || affectiveState == 7)
+					if (Global.affectiveState == 3 || Global.affectiveState == 7)
+					{
+						eaten = 5;
+						maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
+					}
+					break;
+				case cmaze.GRAPE:
+					// int affectiveState = 2;
+					// if (affectiveState == 3 || affectiveState == 7)
+					if (Global.affectiveState == 3 || Global.affectiveState == 7)
+					{
+						eaten = 6;
+						maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
+					}
+					break;
 			}
 
 			if (maze.iMaze[iY/16+ ctables.iYDirection[iDir]]

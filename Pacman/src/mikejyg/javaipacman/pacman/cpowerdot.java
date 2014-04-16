@@ -33,7 +33,7 @@ public class cpowerdot
 	static int frameCount;
 	static int showStatus;
 
-	boolean powerDotEnabled = true;
+	static boolean powerDotEnabled = true;
 	int iValid[];
 
 	// the applet this object is associated to
@@ -82,6 +82,18 @@ public class cpowerdot
 		graphics.drawImage(imageBlank, iX[dot]*16, iY[dot]*16, applet);
 	}
 
+	void fruitEat (int iCol, int iRow)
+	{
+		for (int i=0; i<4; i++)
+		{
+			if (iX[i]==iCol && iY[i]==iRow)
+			{
+				iValid[i]=0;
+				clear(i);
+			}
+		}
+	}
+	
 	void eat(int iCol, int iRow)
 	{
 		if(powerDotEnabled)

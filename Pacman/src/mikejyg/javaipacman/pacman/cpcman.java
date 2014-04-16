@@ -94,7 +94,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	// game counters
 	final int PAcLIVE=3;
 	int numberOfGhosts = 4;
-	int maxNumberOfGhosts =8;
+	int maxNumberOfGhosts = 8;
 	int pacRemain;
 	int changePacRemain;  // to signal redraw remaining pac
 
@@ -738,7 +738,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			switch (gameState)
 			{
 			case STARTWAIT: 
-				if (pacKeyDir==ctables.UP)	// the key to start game
+				if (pacKeyDir==ctables.UP || pacKeyDir == ctables.DOWN || pacKeyDir==ctables.LEFT || pacKeyDir==ctables.RIGHT)	// the key to start game
 					gameState=RUNNING;
 				else
 					return;
