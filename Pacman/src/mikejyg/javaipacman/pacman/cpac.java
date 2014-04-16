@@ -161,7 +161,7 @@ public class cpac
 			case cmaze.POWER_DOT:
 				//int affectiveState = 2;
 				//if (affectiveState == 3 || affectiveState == 7)
-				if (Global.affectiveState == 3 || Global.affectiveState == 7)
+				if (Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
 				{
 					eaten = 2;
 					powerDot.eat(iX / 16, iY / 16);

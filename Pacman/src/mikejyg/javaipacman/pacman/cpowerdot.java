@@ -33,6 +33,7 @@ public class cpowerdot
 	static int frameCount;
 	static int showStatus;
 
+	boolean powerDotEnabled = true;
 	int iValid[];
 
 	// the applet this object is associated to
@@ -83,16 +84,19 @@ public class cpowerdot
 
 	void eat(int iCol, int iRow)
 	{
-		for (int i=0; i<4; i++)
+		if(powerDotEnabled)
 		{
-			if (iX[i]==iCol && iY[i]==iRow)
+			for (int i=0; i<4; i++)
 			{
-				iValid[i]=0;
-				clear(i);
+				if (iX[i]==iCol && iY[i]==iRow)
+				{
+					iValid[i]=0;
+					clear(i);
+				}
 			}
+			for (int i=0; i<ghosts.size(); i++)
+				ghosts.elementAt(i).blind();
 		}
-		for (int i=0; i<ghosts.size(); i++)
-			ghosts.elementAt(i).blind();
 	}
 
 	public void draw()
@@ -115,9 +119,15 @@ public class cpowerdot
 		{
 			if (iValid[i]==1 && showStatus==1)
 				if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
-					graphics.drawImage(imagePowerDot,iX[i]*16, iY[i]*16, applet);
+					{
+						graphics.drawImage(imagePowerDot,iX[i]*16, iY[i]*16, applet);
+						powerDotEnabled = true;
+					}
 				else
+				{
+					powerDotEnabled = false;
 					graphics.drawImage(imageBlank, iX[i]*16, iY[i]*16, applet);
+				}
 			else
 				graphics.drawImage(imageBlank, iX[i]*16, iY[i]*16, applet);
 		}
