@@ -275,6 +275,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 	    	emote.open(AudioSystem.getAudioInputStream(new File(emotion)));
 	    	emote.start();
+	    	Global.cur_song = emotion;
 	    	
 	    	firstSong = false;
 	    }
@@ -614,6 +615,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 					16*i+ leftOffset, 
 					canvasHeight-17+ topOffset, this); 
 
+			Global.lives = pacRemain;
 			changePacRemain=0;
 		}
 		
@@ -657,6 +659,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			changePacRemain=1;
 		}
 
+		//store the number of dots remaining to be logged
+		Global.dots_remaining = maze.iTotalDotcount;
+		
 		if (maze.iTotalDotcount==0)
 		{
 			gameState=DEADWAIT;
@@ -678,6 +683,14 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 				pacRemain--;
 				changePacRemain=1;
 				gameState=DEADWAIT;	// stop the game
+				
+				//Log the death
+				try {
+					clogger.outputdeath();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
 				wait=WAITCOUNT;
 				return;	
 			}

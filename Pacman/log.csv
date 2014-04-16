@@ -1,26 +1,21 @@
-Timestamp,State,Pleasure,Arousal,Dominance,Number of Ghosts
-Mon Apr 14 14:26:01 MST 2014,Disagreement,-1,1,1,4
-Mon Apr 14 14:26:11 MST 2014,Disagreement,-1,1,1,4
-Mon Apr 14 14:26:21 MST 2014,Disagreement,-1,1,1,4
-Mon Apr 14 14:26:31 MST 2014,Disagreement,-1,1,1,4
-Mon Apr 14 14:26:41 MST 2014,Frustration,-1,1,-1,4
-Mon Apr 14 14:26:51 MST 2014,Disagreement,-1,1,1,5
-Mon Apr 14 14:27:01 MST 2014,Mediation,1,-1,1,5
-Mon Apr 14 14:27:11 MST 2014,Interested,1,1,-1,5
-Mon Apr 14 14:27:21 MST 2014,Agreement,1,-1,-1,5
-Mon Apr 14 14:27:31 MST 2014,Engagement,1,1,1,5
-Mon Apr 14 14:27:41 MST 2014,Agreement,1,-1,-1,5
-Mon Apr 14 14:27:51 MST 2014,Boredom,-1,-1,1,5
-Mon Apr 14 14:28:01 MST 2014,Frustration,-1,1,-1,6
-Mon Apr 14 14:28:11 MST 2014,Disagreement,-1,1,1,5
-Mon Apr 14 14:28:21 MST 2014,Mediation,1,-1,1,5
-Mon Apr 14 14:28:31 MST 2014,Interested,1,1,-1,5
-Mon Apr 14 14:28:41 MST 2014,Interested,1,1,-1,5
-Mon Apr 14 14:28:51 MST 2014,Concentration,-1,-1,-1,5
-Mon Apr 14 14:29:01 MST 2014,Boredom,-1,-1,1,5
-Mon Apr 14 14:29:11 MST 2014,Interested,1,1,-1,6
-Timestamp,State,Pleasure,Arousal,Dominance,Score,Number of Ghosts
-Mon Apr 14 14:33:56 MST 2014,Concentration,-1,-1,-1,0,4
-Mon Apr 14 14:34:06 MST 2014,Frustration,-1,1,-1,280,4
-Mon Apr 14 14:34:16 MST 2014,Concentration,-1,-1,-1,510,5
-Mon Apr 14 14:34:26 MST 2014,Engagement,1,1,1,710,5
+Timestamp,State,Pleasure,Arousal,Dominance,Lives Remaining,Dots Remaining,Score,Number of Ghosts,Song
+Tue Apr 15 21:18:18 MST 2014,Disagreement,-1,1,1,3,0,0,4,
+Tue Apr 15 21:18:28 MST 2014,Engagement,1,1,1,2,132,170,4,C:\Users\Ryan\Documents\GitHub\Capstone-Pacman\Pacman\songSpeed6.wav
+Tue Apr 15 21:18:38 MST 2014,Engagement,1,1,1,2,110,390,4,C:\Users\Ryan\Documents\GitHub\Capstone-Pacman\Pacman\songSpeed1.wav
+Tue Apr 15 21:18:48 MST 2014,Concentration,-1,-1,-1,3,78,710,4,C:\Users\Ryan\Documents\GitHub\Capstone-Pacman\Pacman\songSpeed1.wav
+Tue Apr 15 21:18:58 MST 2014,Disagreement,-1,1,1,3,53,960,4,C:\Users\Ryan\Documents\GitHub\Capstone-Pacman\Pacman\songSpeed5.wav
+Tue Apr 15 21:19:08 MST 2014,Boredom,-1,-1,1,3,28,1210,4,C:\Users\Ryan\Documents\GitHub\Capstone-Pacman\Pacman\songSpeed6.wav
+Tue Apr 15 21:19:18 MST 2014,Agreement,1,-1,-1,2,27,1220,6,C:\Users\Ryan\Documents\GitHub\Capstone-Pacman\Pacman\songSpeed2.wav
+Tue Apr 15 21:19:28 MST 2014,Mediation,1,-1,1,3,27,0,6,C:\Users\Ryan\Documents\GitHub\Capstone-Pacman\Pacman\songSpeed4.wav
+Tue Apr 15 21:19:38 MST 2014,Mediation,1,-1,1,3,144,210,6,C:\Users\Ryan\Documents\GitHub\Capstone-Pacman\Pacman\songSpeed3.wav
+Tue Apr 15 21:19:48 MST 2014,Boredom,-1,-1,1,2,128,370,6,C:\Users\Ryan\Documents\GitHub\Capstone-Pacman\Pacman\songSpeed3.wav
+Tue Apr 15 21:27:04 MST 2014,Engagement,1,1,1,3,0,0,4,
+Tue Apr 15 21:27:14 MST 2014,Engagement,1,1,1,3,129,240,4,C:\Users\Ryan\Documents\GitHub\Capstone-Pacman\Pacman\songSpeed1.wav
+Tue Apr 15 21:27:16 MST 2014,User Death
+Tue Apr 15 21:27:24 MST 2014,Engagement,1,1,1,2,116,370,4,C:\Users\Ryan\Documents\GitHub\Capstone-Pacman\Pacman\songSpeed1.wav
+Tue Apr 15 21:27:34 MST 2014,Boredom,-1,-1,1,2,101,520,4,C:\Users\Ryan\Documents\GitHub\Capstone-Pacman\Pacman\songSpeed1.wav
+Tue Apr 15 21:27:44 MST 2014,Concentration,-1,-1,-1,2,78,950,6,C:\Users\Ryan\Documents\GitHub\Capstone-Pacman\Pacman\songSpeed2.wav
+Tue Apr 15 21:27:54 MST 2014,Engagement,1,1,1,2,50,1230,6,C:\Users\Ryan\Documents\GitHub\Capstone-Pacman\Pacman\songSpeed5.wav
+Tue Apr 15 21:27:55 MST 2014,User Death
+Tue Apr 15 21:28:04 MST 2014,Disagreement,-1,1,1,1,36,1370,6,C:\Users\Ryan\Documents\GitHub\Capstone-Pacman\Pacman\songSpeed1.wav
+Tue Apr 15 21:28:06 MST 2014,User Death
