@@ -706,7 +706,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 	public void moveGhosts()
 	{
-		for(int index = 0; index < ghosts.elementAt(1).speed.baseSpeed; index++)
+		for(int index = 0; index < ghosts.elementAt(index).speed.baseSpeed; index++)
 		{
 			for (int i=0; i<ghosts.size(); i++)
 				ghosts.elementAt(i).move(pac.iX, pac.iY, pac.iDir);
