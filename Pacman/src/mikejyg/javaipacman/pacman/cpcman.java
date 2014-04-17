@@ -1058,6 +1058,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 			}
 		}
+		else
+			newEmotion = false;
+		
 	}
 
 	// for applet the check state
