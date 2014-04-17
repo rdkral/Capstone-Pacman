@@ -322,7 +322,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			String pacSpeed = (configFile.getProperty("pacBaseSpeed"));
 			pacBaseSpeed = Integer.parseInt(pacSpeed);
 			
-			
+						
 			String engagedEnable = (configFile.getProperty("engagement").toLowerCase());
 			engagementEnable = Boolean.parseBoolean(engagedEnable);
 			
@@ -347,6 +347,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			String interestedConfig = (configFile.getProperty("interested").toLowerCase());
 			interestedEnable = Boolean.parseBoolean(disagreementConfig);
 			
+
 
 		}
 		catch (IOException e)
@@ -562,12 +563,16 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 		powerDot.draw();
 		
-		int affectiveState = 2;
-		if(affectiveState==3 || affectiveState==7)
+	//	int affectiveState = 2;
+	//	if(affectiveState==3 || affectiveState==7)
 		//if (Global.affectiveState == 3 || Global.affectiveState == 7)
-		{
+	//	{
 			maze.drawOneUp(); // <---------------One-up
-		}
+			maze.drawOrange();
+			maze.drawGrape();
+			maze.drawMelon();
+			
+	//	}
 
 
 		for (int i=0; i<ghosts.size(); i++)
@@ -663,6 +668,18 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			playSound(life);	//play eatPowerPellet Audio
 			pacRemain++; //<<---------------------One-up
 			changePacRemain=1;
+		}else if (k==4)	// eaten orange
+		{
+			changeScore=1;
+			score+= 20 * ((round+1)/2) ;
+		}else if (k==5)	// eaten melon
+		{
+			changeScore=1;
+			score+= 20 * ((round+1)/2) ;
+		}else if (k==6)	// eaten gwape
+		{
+			changeScore=1;
+			score+= 20 * ((round+1)/2) ;
 		}
 		
 		if (maze.iTotalDotcount==0)
@@ -1022,9 +1039,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	{
 		int affectState = Global.affectiveState;
 
-		if(stateEnabled(affectState))
+		if (stateEnabled(affectState))
 		{
-			if (affectState > 0)
+			if(affectState > 0)
 			{
 				if(firstSong)
 				{
@@ -1040,8 +1057,6 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 				}
 
 			}
-			else
-				newEmotion = false;
 		}
 	}
 

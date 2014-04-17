@@ -89,27 +89,29 @@ public class cmaze
 		Random generator = new Random();
 		int level = generator.nextInt(n); // <-- random number generator here
 		//level=6;
-		if (level == 1)
+		switch (level) {
+		case 2:
 			ctables.MazeDefine = ctables.MazeDefine_lvl1;
-		else if (level == 2)
+			break;
+		case 3:
 			ctables.MazeDefine = ctables.MazeDefine_lvl2;
-		else if (level == 3)
-			ctables.MazeDefine = ctables.MazeDefine_lvl3;
-		else if (level == 4)
-			ctables.MazeDefine = ctables.MazeDefine_lvl4;
-		else if (level == 5)
+			break;
+		case 4:
 			ctables.MazeDefine = ctables.MazeDefine_lvl5;
-		else if (level == 6)
+			break;
+		case 5:
 			ctables.MazeDefine = ctables.MazeDefine_lvl6;
-		else if (level == 7)
+			break;
+		case 6:
 			ctables.MazeDefine = ctables.MazeDefine_lvl7;
-		else if (level == 8)
+			break;
+		case 7:
 			ctables.MazeDefine = ctables.MazeDefine_lvl8;
-		else if (level == 9)
+			break;
+		case 8:
 			ctables.MazeDefine = ctables.MazeDefine_lvl9;
-		/*else
-			ctables.MazeDefine = ctables.MazeDefine;*/
-		
+			break;
+		}
 		int i,j,k;
 		iTotalDotcount=0;
 		for (i=0; i<HEIGHT; i++)
@@ -259,17 +261,17 @@ public class cmaze
 	public void DrawOrange(int icol, int iRow) 
 	{
 		if (iMaze[iRow][icol]==ORANGE)
-			graphics.drawImage(imageOneUp, icol*16,iRow*16,applet);
+			graphics.drawImage(imageOrange, icol*16,iRow*16,applet);
 	}	
 	public void DrawMelon(int icol, int iRow) 
 	{
 		if (iMaze[iRow][icol]==MELON)
-			graphics.drawImage(imageOneUp, icol*16,iRow*16,applet);
+			graphics.drawImage(imageMelon, icol*16,iRow*16,applet);
 	}	
 	public void DrawGrape(int icol, int iRow) 
 	{
 		if (iMaze[iRow][icol]==GRAPE)
-			graphics.drawImage(imageOneUp, icol*16,iRow*16,applet);
+			graphics.drawImage(imageGrape, icol*16,iRow*16,applet);
 	}	
 	void DrawWall(Graphics g)
 	{
