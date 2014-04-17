@@ -110,7 +110,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	static boolean shouldUpdateGhost = false;
 	static boolean engagementEnable,boredomEnable,frustrationEnable,
 				   meditationEnable, agreementEnable,concentratingEnable, 
-				   disagreementEnable, interestedEnable = true;
+				   disagreementEnable, interestedEnable;
 
 	//music
 	boolean isPlaying = false;
@@ -321,6 +321,33 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			
 			String pacSpeed = (configFile.getProperty("pacBaseSpeed"));
 			pacBaseSpeed = Integer.parseInt(pacSpeed);
+			
+			
+			String engagedEnable = (configFile.getProperty("engagement").toLowerCase());
+			engagementEnable = Boolean.parseBoolean(engagedEnable);
+			
+			String boredomConfig = (configFile.getProperty("boredom").toLowerCase());
+			boredomEnable =Boolean.parseBoolean(boredomConfig);
+			
+			String frustrationConfig = (configFile.getProperty("frustration").toLowerCase());
+			frustrationEnable = Boolean.parseBoolean(frustrationConfig);
+				
+			String meditationConfig = (configFile.getProperty("meditation").toLowerCase());
+			meditationEnable = Boolean.parseBoolean( meditationConfig);
+			
+			String agreementConfig = (configFile.getProperty("agreement").toLowerCase());
+			agreementEnable = Boolean.parseBoolean(agreementConfig);
+			
+			String concentratingConfig = (configFile.getProperty("concentrating").toLowerCase());
+			concentratingEnable = Boolean.parseBoolean(concentratingConfig);
+			
+			String disagreementConfig = (configFile.getProperty("disagreement").toLowerCase());
+			disagreementEnable =Boolean.parseBoolean( disagreementConfig);
+			
+			String interestedConfig = (configFile.getProperty("interested").toLowerCase());
+			interestedEnable = Boolean.parseBoolean(disagreementConfig);
+			
+
 		}
 		catch (IOException e)
 		{
@@ -869,7 +896,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	{	
 		if(isNotFirstState)
 		{
-			if((Global.affectiveState == 1) && shouldUpdateGhost)
+			if((Global.affectiveState == 1) && shouldUpdateGhost && stateEnabled(Global.affectiveState))
 			{
 				if(shouldIncreaseGhostSpeed == false)//pac.speed >1)	
 					decreasePacSpeed();
@@ -882,14 +909,14 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 						shouldIncreaseGhostSpeed = false;
 					}
 			}
-			else if ((Global.affectiveState == 2) && shouldUpdateGhost)
+			else if ((Global.affectiveState == 2) && shouldUpdateGhost && stateEnabled(Global.affectiveState))
 			{
 				//Increase music speed
 				//Load harder lvl
 				addGhost();
 				
 			}
-			else if ((Global.affectiveState == 3) && shouldUpdateGhost)
+			else if ((Global.affectiveState == 3) && shouldUpdateGhost && stateEnabled(Global.affectiveState))
 			{
 				//Slow Down music
 				//Load Easier map
@@ -900,7 +927,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			}
 			else 
 			{
-				if(shouldUpdateGhost)
+				if(shouldUpdateGhost && stateEnabled(Global.affectiveState))
 				{
 					increaseSpeedOfAllGhosts();
 				}
@@ -965,29 +992,57 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 				ghost.speed.decreaseSpeed();
 		}
 	}
+	
+	public Boolean stateEnabled(int state)
+	{
+		Boolean enabled = false;
+		switch(state)
+		{
+			case 1: enabled = engagementEnable;
+				break;
+			case 2: enabled = boredomEnable;
+				break;
+			case 3: enabled = frustrationEnable;
+				break;
+			case 4: enabled = meditationEnable;
+				break;
+			case 5: enabled = agreementEnable;
+				break;
+			case 6: enabled = concentratingEnable;
+				break;
+			case 7: enabled = disagreementEnable;
+				break;
+			case 8: enabled = interestedEnable;
+			default: enabled = false;
+		}
+			return enabled;
+	}
 
 	public void emotionChange()
 	{
 		int affectState = Global.affectiveState;
 
-		if (affectState > 0)
+		if(stateEnabled(affectState))
 		{
-			if(firstSong)
+			if (affectState > 0)
 			{
-				emoteSong(emotion);
-				newEmotion = false;
+				if(firstSong)
+				{
+					emoteSong(emotion);
+					newEmotion = false;
+				}
+				else
+				{
+					emote.stop();
+
+					emoteSong(emotion);
+					newEmotion = false;
+				}
+
 			}
 			else
-			{
-				emote.stop();
-
-				emoteSong(emotion);
 				newEmotion = false;
-			}
-
 		}
-		else
-			newEmotion = false;
 	}
 
 	// for applet the check state
