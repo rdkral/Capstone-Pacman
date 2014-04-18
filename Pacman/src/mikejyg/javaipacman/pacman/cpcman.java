@@ -84,6 +84,8 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	// the off screen canvas for the maze
 	Image offScreen;
 	Graphics offScreenG;
+	
+	
 
 	// the objects    
 	cmaze maze;
@@ -302,6 +304,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 		Properties configFile = new Properties();
 		InputStream input = null;
+		
 
 		try{
 			input = new FileInputStream("pacconfig.properties");
@@ -565,16 +568,14 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		
 	//	int affectiveState = 2;
 	//	if(affectiveState==3 || affectiveState==7)
-		//if (Global.affectiveState == 3 || Global.affectiveState == 7)
-	//	{
+		//if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
+		//{
 			maze.drawOneUp(); // <---------------One-up
 			maze.drawOrange();
 			maze.drawGrape();
 			maze.drawMelon();
-			
-	//	}
-
-
+		//}
+		
 		for (int i=0; i<ghosts.size(); i++)
 			ghosts.elementAt(i).draw();
 
@@ -670,14 +671,17 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			changePacRemain=1;
 		}else if (k==4)	// eaten orange
 		{
+			playSound(life);
 			changeScore=1;
 			score+= 20 * ((round+1)/2) ;
 		}else if (k==5)	// eaten melon
 		{
+			playSound(life);
 			changeScore=1;
 			score+= 20 * ((round+1)/2) ;
 		}else if (k==6)	// eaten gwape
 		{
+			playSound(life);
 			changeScore=1;
 			score+= 20 * ((round+1)/2) ;
 		}

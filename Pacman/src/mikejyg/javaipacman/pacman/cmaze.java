@@ -51,6 +51,9 @@ public class cmaze {
 
 	// the dot image
 	Image imageDot;
+	
+	//Blank Image
+	Image imageBlank;
 
 	// the one-up image
 	Image imageOneUp; // <---------------------------One-up
@@ -69,6 +72,11 @@ public class cmaze {
 		// setup associations
 		applet = a;
 		graphics = g;
+		
+		imageBlank=applet.createImage(16,16);
+		Graphics imageG=imageBlank.getGraphics();
+		imageG.setColor(Color.black);
+		imageG.fillRect(0,0,16,16);
 
 		imageMaze = applet.createImage(iWidth, iHeight);
 		imageDot = applet.createImage(2, 2);
@@ -159,13 +167,13 @@ public class cmaze {
 		drawDots();
 		//int affectiveState = 2;
 		//if(affectiveState==3 || affectiveState==7)
-		//if (Global.affectiveState == 3 || Global.affectiveState == 7)
-		//{
+		if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
+		{
 			drawOneUp(); // <---------------One-up
 			drawOrange();
 			drawMelon();
 			drawGrape();
-		//}
+		}
 	}
 
 	void drawDots() // on the offscreen
@@ -178,6 +186,8 @@ public class cmaze {
 					graphics.drawImage(imageDot, j * 16 + 7, i * 16 + 7, applet);
 			}
 	}
+	
+	
 
 	void drawOneUp() // <--------------------------One-up
 	{
@@ -185,7 +195,10 @@ public class cmaze {
 		for (i = 0; i < HEIGHT; i++)
 			for (j = 0; j < WIDTH; j++) {
 				if (iMaze[i][j] == ONE_UP)
-					graphics.drawImage(imageOneUp, j * 16, i * 16, applet);
+					if (Global.affectiveState == 1 || Global.affectiveState == 3 || Global.affectiveState == 6 || Global.affectiveState == 7)
+						graphics.drawImage(imageOneUp, j * 16, i * 16, applet);
+					else
+						graphics.drawImage(imageBlank, j * 16, i * 16, applet);
 			}
 	}
 
@@ -194,7 +207,10 @@ public class cmaze {
 		for (i = 0; i < HEIGHT; i++)
 			for (j = 0; j < WIDTH; j++) {
 				if (iMaze[i][j] == ORANGE)
-					graphics.drawImage(imageOrange, j * 16, i * 16, applet);
+					if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
+						graphics.drawImage(imageOrange, j * 16, i * 16, applet);
+					else
+						graphics.drawImage(imageBlank, j * 16, i * 16, applet);
 			}
 	}
 
@@ -203,7 +219,10 @@ public class cmaze {
 		for (i = 0; i < HEIGHT; i++)
 			for (j = 0; j < WIDTH; j++) {
 				if (iMaze[i][j] == MELON)
-					graphics.drawImage(imageMelon, j * 16, i * 16, applet);
+					if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
+						graphics.drawImage(imageMelon, j * 16, i * 16, applet);
+					else
+						graphics.drawImage(imageBlank, j * 16, i * 16, applet);
 			}
 	}
 
@@ -212,7 +231,10 @@ public class cmaze {
 		for (i = 0; i < HEIGHT; i++)
 			for (j = 0; j < WIDTH; j++) {
 				if (iMaze[i][j] == GRAPE)
-					graphics.drawImage(imageGrape, j * 16, i * 16, applet);
+					if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
+						graphics.drawImage(imageGrape, j * 16, i * 16, applet);
+					else
+						graphics.drawImage(imageBlank, j * 16, i * 16, applet);
 			}
 	}
 
@@ -238,38 +260,45 @@ public class cmaze {
 		if (iMaze[iRow][icol] == DOT)
 			graphics.drawImage(imageDot, icol * 16 + 7, iRow * 16 + 7, applet);
 	}
+	
+	void DrawImageBlank(int icol, int iRow)
+	{
+		graphics.drawImage(imageBlank, icol*16, iRow*16, applet);
+	}
 
 	public void DrawOneUp(int icol, int iRow) // <----------------------------One-up
 	{
-		//int affectiveState = 2;
 		if (iMaze[iRow][icol] == ONE_UP)
-			//if (affectiveState == 3 || affectiveState == 7)
-			//if (Global.affectiveState == 3 || Global.affectiveState == 7)
+			if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
 				graphics.drawImage(imageOneUp, icol * 16, iRow * 16, applet);
+			else
+				graphics.drawImage(imageBlank, icol*16, iRow*16, applet);
 	}
 
 	public void DrawOrange(int icol, int iRow) {
-		//int affectiveState = 2;
 		if (iMaze[iRow][icol] == ORANGE)
-			////if (affectiveState == 3 || affectiveState == 7)
-			//if (Global.affectiveState == 3 || Global.affectiveState == 7)
+			if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
 				graphics.drawImage(imageOrange, icol * 16, iRow * 16, applet);
+			else
+				graphics.drawImage(imageBlank, icol*16, iRow*16, applet);
 	}
 
 	public void DrawMelon(int icol, int iRow) {
-		//int affectiveState = 2;
 		if (iMaze[iRow][icol] == MELON)
-			//if (affectiveState == 3 || affectiveState == 7)
-			//if (Global.affectiveState == 3 || Global.affectiveState == 7)
+			if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
 				graphics.drawImage(imageMelon, icol * 16, iRow * 16, applet);
+			else
+				graphics.drawImage(imageBlank, icol*16, iRow*16, applet);
+				
 	}
 
 	public void DrawGrape(int icol, int iRow) {
-		//int affectiveState = 2;
+		
 		if (iMaze[iRow][icol] == GRAPE)
-			//if (affectiveState == 3 || affectiveState == 7)
-			//if (Global.affectiveState == 3 || Global.affectiveState == 7)
+			if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
 				graphics.drawImage(imageGrape, icol * 16, iRow * 16, applet);
+			else
+				graphics.drawImage(imageBlank, icol*16, iRow*16, applet);
 	}
 
 	void DrawWall(Graphics g) {

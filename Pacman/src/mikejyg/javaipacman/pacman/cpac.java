@@ -170,23 +170,24 @@ public class cpac
 				case cmaze.ONE_UP: //<-----------------One-up
 					//int affectiveState = 2;
 					//if (affectiveState == 3 || affectiveState == 7)
-					if (Global.affectiveState == 3 || Global.affectiveState == 7)
+					if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
 					{
 						eaten = 3;
 						maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
-					}
+					}						
 					break;
 				case cmaze.ORANGE:
-						
+					if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
+					{
 						eaten = 4;
 						powerDot.fruitEat(iY / 16, iX / 16);
 						maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
-					
+					}
 					break;
 				case cmaze.MELON:
 					// int affectiveState = 2;
 					// if (affectiveState == 3 || affectiveState == 7)
-					if (Global.affectiveState == 3 || Global.affectiveState == 7)
+					if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
 					{
 						eaten = 5;
 						maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
@@ -195,7 +196,7 @@ public class cpac
 				case cmaze.GRAPE:
 					// int affectiveState = 2;
 					// if (affectiveState == 3 || affectiveState == 7)
-					if (Global.affectiveState == 3 || Global.affectiveState == 7)
+					if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
 					{
 						eaten = 6;
 						maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
