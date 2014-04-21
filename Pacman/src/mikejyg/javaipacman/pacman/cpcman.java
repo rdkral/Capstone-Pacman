@@ -348,7 +348,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			disagreementEnable =Boolean.parseBoolean( disagreementConfig);
 			
 			String interestedConfig = (configFile.getProperty("interested").toLowerCase());
-			interestedEnable = Boolean.parseBoolean(disagreementConfig);
+			interestedEnable = Boolean.parseBoolean(interestedConfig);
 			
 
 
