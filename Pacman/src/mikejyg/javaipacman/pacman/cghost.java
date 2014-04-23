@@ -22,6 +22,11 @@ package mikejyg.javaipacman.pacman;
 import java.lang.Error;
 import java.awt.*;
 
+/**
+ * Base class used to generate all enemy ghosts. This class handles the ghosts initialization, movement,
+ * transitions between states, and drawing them to the screen. 
+ *
+ */
 public class cghost
 {
 	final int IN=0;
@@ -62,7 +67,13 @@ public class cghost
 	Image imageGhost; 
 	Image imageBlind;
 	Image imageEye;
-
+	/**
+	 * Constructor that initializes a ghost
+	 * @param a			The {@link Window} to draw the ghost to.
+	 * @param g			The {@link Graphics} that will allow the ghost to be drawn.
+	 * @param m			The {@link cmaze} in which the ghost is being drawn in.
+	 * @param newColor	The {@link Color} of the ghost.
+	 */
 	cghost(Window a, Graphics g, cmaze m, Color newColor)
 	{
 		applet=a;
