@@ -1,3 +1,7 @@
+/*
+This is part of the project of the Capstone team
+*/
+
 package mikejyg.javaipacman.pacman;
 
 
