@@ -21,8 +21,17 @@ package mikejyg.javaipacman.pacman;
 
 import java.awt.*;
 
+/**
+ * 
+ * 
+ *
+ */
 public class cimage
 {
+	/**
+	 * 
+	 * @param img
+	 */
 	public static void drawDot(Image img)
 	{
 		Graphics g=img.getGraphics();
@@ -31,6 +40,10 @@ public class cimage
 		g.dispose();
 	}
 
+	/**
+	 * 
+	 * @param img
+	 */
 	public static void drawPowerDot(Image img)
 	{
 		Graphics g=img.getGraphics();
@@ -54,6 +67,10 @@ public class cimage
 		g.dispose();
 	}
 	
+	/**
+	 * 
+	 * @param img
+	 */
 	public static void drawOneUp(Image img)
 	{
 		Graphics g=img.getGraphics();
@@ -77,6 +94,10 @@ public class cimage
 		g.dispose();
 	}
 	
+	/**
+	 * 
+	 * @param img
+	 */
 	public static void drawOrange(Image img)
 	{
 		Graphics g=img.getGraphics();
@@ -100,6 +121,10 @@ public class cimage
 		g.dispose();
 	}
 	
+	/**
+	 * 
+	 * @param img
+	 */
 	public static void drawMelon(Image img)
 	{
 		Graphics g=img.getGraphics();
@@ -123,6 +148,10 @@ public class cimage
 		g.dispose();
 	}
 	
+	/**
+	 * 
+	 * @param img
+	 */
 	public static void drawGrape(Image img)
 	{
 		Graphics g=img.getGraphics();
@@ -146,6 +175,13 @@ public class cimage
 		g.dispose();
 	}
 
+	/**
+	 * 
+	 * @param img
+	 * @param dir
+	 * @param step
+	 * @param col
+	 */
 	public static void drawPac(Image img, int dir, int step, Color col)
 	{
 		Graphics g=img.getGraphics();
@@ -169,6 +205,12 @@ public class cimage
 		g.dispose();
 	}
 
+	/**
+	 * 
+	 * @param img
+	 * @param number
+	 * @param color
+	 */
 	public static void drawGhost(Image img, int number, Color color)
 	{
 		Graphics g=img.getGraphics();
@@ -192,10 +234,10 @@ public class cimage
 		g.dispose();
 	}
 
-	////////////////////////////////////////////////////////////////////////////////
-	// image arrays
-	////////////////////////////////////////////////////////////////////////////////
-
+/**
+ * Image Arrays
+ * 
+ */
 	static final short [][][] pac_bits =
 	{	// [4][4][32]
 		// right 

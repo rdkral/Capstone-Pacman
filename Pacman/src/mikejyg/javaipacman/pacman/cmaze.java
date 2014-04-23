@@ -23,6 +23,11 @@ import java.awt.*;
 import java.util.*;
 
 /* define the maze */
+/**
+ * 
+ * 
+ *
+ */
 public class cmaze {
 	// constant definitions
 	static final int BLANK = 0;
@@ -68,6 +73,11 @@ public class cmaze {
 	int[][] iMaze;
 
 	// initialize the maze
+	/**
+	 * Constructor
+	 * @param a
+	 * @param g
+	 */
 	cmaze(Window a, Graphics g) {
 		// setup associations
 		applet = a;
@@ -89,6 +99,9 @@ public class cmaze {
 		iMaze = new int[HEIGHT][WIDTH];
 	}
 
+	/**
+	 * 
+	 */
 	public void start() {
 		// int n = 10;
 		// Random generator = new Random();
@@ -162,6 +175,9 @@ public class cmaze {
 		createImage();
 	}
 
+	/**
+	 * 
+	 */
 	public void draw() {
 		graphics.drawImage(imageMaze, 0, 0, applet);
 		drawDots();
@@ -176,6 +192,9 @@ public class cmaze {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	void drawDots() // on the offscreen
 	{
 		int i, j;
@@ -188,7 +207,9 @@ public class cmaze {
 	}
 	
 	
-
+	/**
+	 * 
+	 */
 	void drawOneUp() // <--------------------------One-up
 	{
 		int i, j;
@@ -202,6 +223,9 @@ public class cmaze {
 			}
 	}
 
+	/**
+	 * 
+	 */
 	void drawOrange() {
 		int i, j;
 		for (i = 0; i < HEIGHT; i++)
@@ -214,6 +238,9 @@ public class cmaze {
 			}
 	}
 
+	/**
+	 * 
+	 */
 	void drawMelon() {
 		int i, j;
 		for (i = 0; i < HEIGHT; i++)
@@ -226,6 +253,9 @@ public class cmaze {
 			}
 	}
 
+	/**
+	 * 
+	 */
 	void drawGrape() {
 		int i, j;
 		for (i = 0; i < HEIGHT; i++)
@@ -238,6 +268,9 @@ public class cmaze {
 			}
 	}
 
+	/**
+	 * 
+	 */
 	void createImage() {
 		// create the image of a dot
 		cimage.drawDot(imageDot);
@@ -256,16 +289,31 @@ public class cmaze {
 		DrawWall(gmaze);
 	}
 
+	/**
+	 * 
+	 * @param icol
+	 * @param iRow
+	 */
 	public void DrawDot(int icol, int iRow) {
 		if (iMaze[iRow][icol] == DOT)
 			graphics.drawImage(imageDot, icol * 16 + 7, iRow * 16 + 7, applet);
 	}
 	
+	/**
+	 * 
+	 * @param icol
+	 * @param iRow
+	 */
 	void DrawImageBlank(int icol, int iRow)
 	{
 		graphics.drawImage(imageBlank, icol*16, iRow*16, applet);
 	}
 
+	/**
+	 * 
+	 * @param icol
+	 * @param iRow
+	 */
 	public void DrawOneUp(int icol, int iRow) // <----------------------------One-up
 	{
 		if (iMaze[iRow][icol] == ONE_UP)
@@ -275,6 +323,11 @@ public class cmaze {
 				graphics.drawImage(imageBlank, icol*16, iRow*16, applet);
 	}
 
+	/**
+	 * 
+	 * @param icol
+	 * @param iRow
+	 */
 	public void DrawOrange(int icol, int iRow) {
 		if (iMaze[iRow][icol] == ORANGE)
 			if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
@@ -283,6 +336,11 @@ public class cmaze {
 				graphics.drawImage(imageBlank, icol*16, iRow*16, applet);
 	}
 
+	/**
+	 * 
+	 * @param icol
+	 * @param iRow
+	 */
 	public void DrawMelon(int icol, int iRow) {
 		if (iMaze[iRow][icol] == MELON)
 			if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
@@ -292,6 +350,11 @@ public class cmaze {
 				
 	}
 
+	/**
+	 * 
+	 * @param icol
+	 * @param iRow
+	 */
 	public void DrawGrape(int icol, int iRow) {
 		
 		if (iMaze[iRow][icol] == GRAPE)
@@ -301,6 +364,10 @@ public class cmaze {
 				graphics.drawImage(imageBlank, icol*16, iRow*16, applet);
 	}
 
+	/**
+	 * 
+	 * @param g
+	 */
 	void DrawWall(Graphics g) {
 		int i, j;
 		int iDir;
@@ -352,6 +419,13 @@ public class cmaze {
 		}
 	}
 
+	/**
+	 * 
+	 * @param g
+	 * @param col
+	 * @param row
+	 * @param iDir
+	 */
 	void DrawBoundary(Graphics g, int col, int row, int iDir) {
 		int x, y;
 

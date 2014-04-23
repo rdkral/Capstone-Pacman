@@ -21,6 +21,11 @@ package mikejyg.javaipacman.pacman;
 
 import java.awt.*;
 
+/**
+ * 
+ * 
+ *
+ */
 public class cpac
 {
 	// frames to wait after eaten a dot
@@ -50,6 +55,13 @@ public class cpac
 	//    cpacmove cAuto;
 
 	//  cpac(Window a, Graphics g, cmaze m, cpowerdot p, cghost cghost[])
+	/**
+	 * Constructor
+	 * @param a
+	 * @param g
+	 * @param m
+	 * @param p
+	 */
 	cpac(Window a, Graphics g, cmaze m, cpowerdot p)    {
 		applet=a;
 		graphics=g;
@@ -68,6 +80,9 @@ public class cpac
 			}	
 	}
 
+	/**
+	 * 
+	 */
 	public void start()
 	{
 		iX=10*16;
@@ -77,6 +92,9 @@ public class cpac
 		speed=1;
 	}
 
+	/**
+	 * 
+	 */
 	public void draw()
 	{
 		//Determine what color Pacman should be based on state
@@ -123,6 +141,11 @@ public class cpac
 	// return 1 if eat a dot
 	// return 2 if eat power dot
 	@SuppressWarnings("static-access")
+	/**
+	 * 
+	 * @param iNextDir
+	 * @return
+	 */
 	public int move(int iNextDir)
 	{
 		int eaten=0;
@@ -219,6 +242,12 @@ public class cpac
 		return(eaten);
 	}	
 
+	/**
+	 * 
+	 * @param iRow
+	 * @param icol
+	 * @return
+	 */
 	boolean mazeOK(int iRow, int icol)
 	{
 		if ( (maze.iMaze[icol][iRow] & ( cmaze.WALL | cmaze.DOOR)) ==0)
@@ -226,6 +255,10 @@ public class cpac
 		return(false);
 	}
 	
+	/**
+	 * 
+	 * @param col
+	 */
 	public void changeColor(Color col) {
 		//loop through pac man images and set them to the new color
 		for (int i=0; i<4; i++) {

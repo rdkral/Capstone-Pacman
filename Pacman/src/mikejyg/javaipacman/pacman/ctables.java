@@ -51,6 +51,9 @@ public class ctables
 	public static final int DOWN=3;
 
 	// the maze definition string
+	/**
+	 * Maze strings
+	 */
 	public static String[] MazeDefine=
 	{
 		"XXXXXXXXXXXXXXXXXXXXX",	// 1

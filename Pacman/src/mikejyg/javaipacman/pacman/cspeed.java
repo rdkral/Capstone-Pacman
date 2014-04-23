@@ -39,11 +39,20 @@ public class cspeed
 
 	float frameStepRatio;
 
+	/**
+	 * Constructor
+	 */
 	cspeed()
 	{
 		start(1,1);
 	}
 
+	/**
+	 * 
+	 * @param stepsValue
+	 * @param frameValue
+	 * @throws Error
+	 */
 	public void start(int stepsValue, int frameValue)
 	throws Error
 	{
@@ -59,6 +68,10 @@ public class cspeed
 	}
 
 	// return 1 if move, 0 not move
+	/**
+	 * 
+	 * @return
+	 */
 	public int isMove()	
 	{
 		frameCount--;
@@ -78,6 +91,9 @@ public class cspeed
 		return(0);
 	}
 	
+	/**
+	 * 
+	 */
 	public void increaseSpeed()
 	{
 		baseSpeed++;
@@ -87,6 +103,9 @@ public class cspeed
 //		}
 	}
 	
+	/**
+	 * 
+	 */
 	public void decreaseSpeed()
 	{
 		baseSpeed--;

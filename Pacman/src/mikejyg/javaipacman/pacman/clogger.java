@@ -6,10 +6,20 @@ import java.io.IOException;
 import java.util.Date;
 
 //Make this class static so that it does not need to be instantiated
+
+/**
+ * 
+ * 
+ *
+ */
 public final class clogger {
 	
 	static boolean first;
 
+	/**
+	 * 
+	 * @throws IOException
+	 */
 	public static void outputlog() throws IOException {   
 		//Check if the file exists
 		File f = new File("log.csv");
@@ -43,6 +53,10 @@ public final class clogger {
 	    fileWriter.close();
 	} 
 	
+	/**
+	 * 
+	 * @throws IOException
+	 */
 	public static void outputdeath() throws IOException {   		
 		//Open the file to be written to
 		//This file will be found in the Pacman directory

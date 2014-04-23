@@ -51,6 +51,12 @@ class cpacmove
 	Vector<cghost> cGhost;
 	cmaze cMaze;
 
+	/**
+	 * Constructor
+	 * @param pac
+	 * @param ghost
+	 * @param maze
+	 */
 	cpacmove(cpac pac, Vector<cghost> ghost, cmaze maze)
 	{
 		iDirScore=new int[4];
@@ -65,6 +71,11 @@ class cpacmove
 		cMaze=maze;
 	}
 
+	/**
+	 * 
+	 * @return
+	 * @throws Error
+	 */
 	public int GetNextDir()
 	throws Error
 	{
@@ -125,6 +136,9 @@ class cpacmove
 		//	return(iHDir);  // will not reach here, ordered by javac
 	}
 
+	/**
+	 * 
+	 */
 	void AddGhostScore()
 	{
 		int iXDis, iYDis;	// distance
@@ -174,6 +188,9 @@ class cpacmove
 		}
 	}
 
+	/**
+	 * 
+	 */
 	void AddDotScore()
 	{
 		int i, j;
@@ -226,6 +243,9 @@ class cpacmove
 		}
 	}
 
+	/**
+	 * 
+	 */
 	void AddPowerDotScore()
 	{
 

@@ -22,6 +22,11 @@ package mikejyg.javaipacman.pacman;
 import java.awt.*;
 import java.util.Vector;
 
+/**
+ * 
+ * 
+ *
+ */
 public class cpowerdot
 {
 	final int iX[]={1,19,1,19};
@@ -49,6 +54,12 @@ public class cpowerdot
 	// the blank image
 	Image imageBlank;
 
+	/**
+	 * Constructor
+	 * @param a
+	 * @param g
+	 * @param gh
+	 */
 	cpowerdot(Window a, Graphics g, Vector<cghost> gh)
 	{
 		applet=a;
@@ -70,6 +81,9 @@ public class cpowerdot
 		showStatus=1;	// show
 	}
 
+	/**
+	 * 
+	 */
 	public void start()
 	{
 		// all power dots available
@@ -77,11 +91,20 @@ public class cpowerdot
 			iValid[i]=1;
 	}
 
+	/**
+	 * 
+	 * @param dot
+	 */
 	void clear(int dot)
 	{
 		graphics.drawImage(imageBlank, iX[dot]*16, iY[dot]*16, applet);
 	}
 
+	/**
+	 * 
+	 * @param iCol
+	 * @param iRow
+	 */
 	void fruitEat (int iCol, int iRow)
 	{
 		for (int i=0; i<4; i++)
@@ -94,6 +117,11 @@ public class cpowerdot
 		}
 	}
 	
+	/**
+	 * 
+	 * @param iCol
+	 * @param iRow
+	 */
 	void eat(int iCol, int iRow)
 	{
 		if(powerDotEnabled)
@@ -111,6 +139,9 @@ public class cpowerdot
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void draw()
 	{
 		frameCount--;
