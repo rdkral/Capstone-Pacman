@@ -21,6 +21,11 @@ package mikejyg.javaipacman.pacman;
 
 import java.awt.*;
 
+/**
+ * 
+ * 
+ *
+ */
 public class cpac
 {
 	// frames to wait after eaten a dot
@@ -32,11 +37,12 @@ public class cpac
 	int iX, iY;
 	// current direction
 	int iDir;
-
+	int speed;
 	// the applet this object is associated to
 	Window applet;
 	Graphics graphics;
 
+	
 	// the pac image
 	Image [][] imagePac;
 
@@ -49,6 +55,13 @@ public class cpac
 	//    cpacmove cAuto;
 
 	//  cpac(Window a, Graphics g, cmaze m, cpowerdot p, cghost cghost[])
+	/**
+	 * Constructor
+	 * @param a
+	 * @param g
+	 * @param m
+	 * @param p
+	 */
 	cpac(Window a, Graphics g, cmaze m, cpowerdot p)    {
 		applet=a;
 		graphics=g;
@@ -67,14 +80,21 @@ public class cpac
 			}	
 	}
 
+	/**
+	 * 
+	 */
 	public void start()
 	{
 		iX=10*16;
 		iY=10*16;
 		iDir=1;		// downward, illegal and won't move
 		iDotWait=0;
+		speed=1;
 	}
 
+	/**
+	 * 
+	 */
 	public void draw()
 	{
 		//Determine what color Pacman should be based on state
@@ -101,8 +121,14 @@ public class cpac
 		
 		maze.DrawDot(iX/16, iY/16);
 		maze.DrawDot(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
-		maze.DrawOneUp(iX/16, iY/16); //<-------------------------------One-up
-		maze.DrawOneUp(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0)); //<---One-up
+		maze.DrawOneUp(iX / 16, iY / 16); // <-------------------------------One-up
+		maze.DrawOneUp(iX / 16 + (iX % 16 > 0 ? 1 : 0), iY / 16 + (iY % 16 > 0 ? 1 : 0)); // <---One-up
+		maze.DrawGrape(iX/16, iY/16);
+		maze.DrawGrape(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
+		maze.DrawMelon(iX/16, iY/16);
+		maze.DrawMelon(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
+		maze.DrawOrange(iX/16, iY/16);
+		maze.DrawOrange(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
 
 		int iImageStep=(iX%16 + iY%16)/2; 	// determine shape of PAc
 		if (iImageStep<4)
@@ -114,6 +140,12 @@ public class cpac
 
 	// return 1 if eat a dot
 	// return 2 if eat power dot
+	@SuppressWarnings("static-access")
+	/**
+	 * 
+	 * @param iNextDir
+	 * @return
+	 */
 	public int move(int iNextDir)
 	{
 		int eaten=0;
@@ -141,26 +173,58 @@ public class cpac
 		}
 		if (iX%16==0 && iY%16==0)
 		{
-
 			// see whether has eaten something
 			switch (maze.iMaze[iY/16][iX/16])
 			{
-			case cmaze.DOT:
-				eaten=1;
-				maze.iMaze[iY/16][iX/16]=cmaze.BLANK;	// eat dot
-				maze.iTotalDotcount--;
-				iDotWait=DOT_WAIT;
-				break;
-			case cmaze.POWER_DOT:
-				eaten=2;
-				powerDot.eat(iX/16, iY/16);
-				maze.iMaze[iY/16][iX/16]=cmaze.BLANK;
-				break;
-			case cmaze.ONE_UP: //<-----------------One-up
-				eaten=3;
-				maze.iMaze[iY/16][iX/16]=cmaze.BLANK;
-				break;
-			
+				case cmaze.DOT:
+					eaten=1;
+					maze.iMaze[iY/16][iX/16]=cmaze.BLANK;	// eat dot
+					maze.iTotalDotcount--;
+					iDotWait=DOT_WAIT;
+					break;
+				case cmaze.POWER_DOT:
+					if (powerDot.powerDotEnabled)
+					{
+						eaten = 2;
+						powerDot.eat(iX / 16, iY / 16);
+						maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
+					}
+					break;
+				case cmaze.ONE_UP: //<-----------------One-up
+					//int affectiveState = 2;
+					//if (affectiveState == 3 || affectiveState == 7)
+					if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
+					{
+						eaten = 3;
+						maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
+					}						
+					break;
+				case cmaze.ORANGE:
+					if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
+					{
+						eaten = 4;
+						powerDot.fruitEat(iY / 16, iX / 16);
+						maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
+					}
+					break;
+				case cmaze.MELON:
+					// int affectiveState = 2;
+					// if (affectiveState == 3 || affectiveState == 7)
+					if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
+					{
+						eaten = 5;
+						maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
+					}
+					break;
+				case cmaze.GRAPE:
+					// int affectiveState = 2;
+					// if (affectiveState == 3 || affectiveState == 7)
+					if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
+					{
+						eaten = 6;
+						maze.iMaze[iY / 16][iX / 16] = cmaze.BLANK;
+					}
+					break;
 			}
 
 			if (maze.iMaze[iY/16+ ctables.iYDirection[iDir]]
@@ -178,6 +242,12 @@ public class cpac
 		return(eaten);
 	}	
 
+	/**
+	 * 
+	 * @param iRow
+	 * @param icol
+	 * @return
+	 */
 	boolean mazeOK(int iRow, int icol)
 	{
 		if ( (maze.iMaze[icol][iRow] & ( cmaze.WALL | cmaze.DOOR)) ==0)
@@ -185,6 +255,10 @@ public class cpac
 		return(false);
 	}
 	
+	/**
+	 * 
+	 * @param col
+	 */
 	public void changeColor(Color col) {
 		//loop through pac man images and set them to the new color
 		for (int i=0; i<4; i++) {

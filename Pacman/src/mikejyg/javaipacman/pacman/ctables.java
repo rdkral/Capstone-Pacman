@@ -51,62 +51,47 @@ public class ctables
 	public static final int DOWN=3;
 
 	// the maze definition string
+	/**
+	 * Maze strings
+	 */
 	public static String[] MazeDefine=
 	{
 		"XXXXXXXXXXXXXXXXXXXXX",	// 1
 		"X...................X",	// 2
-		"XO.................OX",	// 3
-		"X...................X",	// 4
-		"X........1..........X",	// 5
+		"XO.......XXX.......OX",	// 3
+		"X.........1.........X",	// 4
+		"X........XXX........X",	// 5
 		"X...................X",	// 6
-		"X......XXX-XXX......X",	// 7
-		"X......X     X......X",	// 8
-		"X......X     X......X",	// 9
+		"X.X.X..XXX-XXX..X.X.X",	// 7
+		"X.XRX..X     X..XGX.X",	// 8
+		"X.X.X..X     X..X.X.X",	// 9
 		"X......XXXXXXX......X",	// 10
 		"X......... .........X",	// 11
-		"X...................X",	// 12
-		"X...................X",	// 13
-		"XO.................OX",	// 14
+		"X........XXX........X",	// 12
+		"X.........M.........X",	// 13
+		"XO.......XXX.......OX",	// 14
 		"X...................X",	// 15
 		"XXXXXXXXXXXXXXXXXXXXX",	// 16
 		
 	};
-  public static String[] MazeDefine_lvl5=
-	{
-		"XXXXXXXXXXXXXXXXXXXXX",	// 1
-		"X......1..X.........X",	// 2
-		"XOXXX.XXX.X.XXX.XXXOX",	// 3
-		"X......X..X.........X",	// 4
-		"XXX.XX.X.XXX.XX.X.X.X",	// 5
-		"X....X..........X.X.X",	// 6
-		"X.XX.X.XXX-XXX.XX.X.X",	// 7
-		"X.XX.X.X     X......X",	// 8
-		"X.XX...X     X.XXXX.X",	// 9
-		"X.XX.X.XXXXXXX.XXXX.X",	// 10
-		"X....X.... .........X",	// 11
-		"XXX.XX.XXXXXXX.X.X.XX",	// 12
-		"X.........X....X....X",	// 13
-		"XOXXXXXXX.X.XXXXXXXOX",	// 14
-		"X...................X",	// 15
-		"XXXXXXXXXXXXXXXXXXXXX",	// 16
-	};
+	
 	public static String[] MazeDefine_lvl1=
 	{
 		"XXXXXXXXXXXXXXXXXXXXX",	// 1
-		"X.....X..XXXX.......X",	// 2
+		"X........XXXX.......X",	// 2
 		"XOXXX.X..XXXX...XXXOX",	// 3
-		"X.XXX.X..XXXX...XXX.X",	// 4
-		"X.XXX.X..XXXX...XXX.X",	// 5
+		"X.XXXGX...M.....XXX.X",	// 4
+		"X.XXX.X..XXXX.......X",	// 5
 		"X...................X",	// 6
 		"XXXX...XXX-XXX......X",	// 7
 		"X....X.X     X.X.XXXX",	// 8
 		"X....X.X     X.X....X",	// 9
 		"XXXX.X.XXXXXXX.X....X",	// 10
-		"X......... ......XXXX",	// 11
-		"X.XXX....XXXX.......X",	// 12
-		"X.XXX.XX.XXXX..XXX..X",	// 13
+		"X......... ........XX",	// 11
+		"X.XXX.XX.XXXX..XXX..X",	// 12
+		"XRXXX.XX1XXXX..XXX..X",	// 13
 		"XOXXX.XX.XXXX..XXX.OX",	// 14
-		"X........XXXX.......X",	// 15
+		"X...................X",	// 15
 		"XXXXXXXXXXXXXXXXXXXXX",	// 16
 		
 	};
@@ -114,19 +99,19 @@ public class ctables
 	public static String[] MazeDefine_lvl2=
 		{
 			"XXXXXXXXXXXXXXXXXXXXX",	// 1
-			"X.......1.......X...X",	// 2
-			"XO...X..........X..OX",	// 3
-			"XXXX.X..XXXXXX..X...X",	// 4
-			"X....X..............X",	// 5
-			"X..X.X...........XXXX",	// 6
-			"X..X...XXX-XXX......X",	// 7
-			"X..XXX.X     X.X.XX.X",	// 8
+			"X...................X",	// 2
+			"XO...X.X......X.X..OX",	// 3
+			"XXXX.XGXXXXXXXXRX...X",	// 4
+			"X....X.X......X.X...X",	// 5
+			"X..X.X............XXX",	// 6
+			"X..XMX.XXX-XXX......X",	// 7
+			"X..X.X.X     X.X.XX.X",	// 8
 			"X......X     X.X....X",	// 9
 			"XXXX...XXXXXXX...XXXX",	// 10
 			"X......... .........X",	// 11
-			"X...X..X.....X..X...X",	// 12
-			"X..XXX.X.....X.XXX..X",	// 13
-			"XO..X..X..X..X..X..OX",	// 14
+			"X...X..X.....X.XXX..X",	// 12
+			"X..XXX.X.....X1XXX..X",	// 13
+			"XO..X..X..X..X.XXX.OX",	// 14
 			"X......X..X..X......X",	// 15
 			"XXXXXXXXXXXXXXXXXXXXX",	// 16
 			
@@ -172,6 +157,110 @@ public class ctables
 			"XXXXXXXXXXXXXXXXXXXXX",	// 16
 			
 		};
+	
+	  public static String[] MazeDefine_lvl5=
+			{
+				"XXXXXXXXXXXXXXXXXXXXX",	// 1
+				"X...................X",	// 2
+				"XOXXX.XX.XX.XXX.XXXOX",	// 3
+				"X......XGX..........X",	// 4
+				"XXX.XX.X.X...XX.X.X.X",	// 5
+				"X....X..........X1X.X",	// 6
+				"X.XX.X.XXX-XXX.XX.X.X",	// 7
+				"XRXX.X.X     X......X",	// 8
+				"X.XX...X     X.XXXX.X",	// 9
+				"X.XX.X.XXXXXXX.XXXX.X",	// 10
+				"X....X.... .........X",	// 11
+				"XXX.XX.XXXXXXX.X.X..X",	// 12
+				"X.........X....XMX..X",	// 13
+				"XOXXXXXXX.X.XXXX.XXOX",	// 14
+				"X...................X",	// 15
+				"XXXXXXXXXXXXXXXXXXXXX",	// 16
+			};
+	  public static String[] MazeDefine_lvl6=
+			{
+				"XXXXXXXXXXXXXXXXXXXXX",	// 1
+				"X...................X",	// 2
+				"XO.XXX..XXX....XXX.OX",	// 3
+				"X...................X",	// 4
+				"X.XX...XX...XXXX.X..X",	// 5
+				"X..X...........XGX..X",	// 6
+				"X....X.XXX-XXX.X.X..X",	// 7
+				"X.XX.X.X     X.X....X",	// 8
+				"XMX..X.X     X.X..X.X",	// 9
+				"X.X..X.XXXXXXX.X..XRX",	// 10
+				"X......... .......X.X",	// 11
+				"X......XXX.XXXXX..X.X",	// 12
+				"X..X.....X1X........X",	// 13
+				"XOXX.XX..X.X...XX..OX",	// 14
+				"X...................X",	// 15
+				"XXXXXXXXXXXXXXXXXXXXX",	// 16
+				
+			};
+	  public static String[] MazeDefine_lvl7=
+			{
+				"XXXXXXXXXXXXXXXXXXXXX",	// 1
+				"X.........X.........X",	// 2
+				"XOXX......X......XXOX",	// 3
+				"X.X.......X.......X.X",	// 4
+				"X.X.XX..XXXXX..XX.X.X",	// 5
+				"X....X.........X....X",	// 6
+				"X.XX.X.XXX-XXX.X.XX.X",	// 7
+				"XMX....X     X....X1X",	// 8
+				"X.X.XX.X     X.XX.X.X",	// 9
+				"X....X.XXXXXXX.X....X",	// 10
+				"X.XX.X.... ....X.XX.X",	// 11
+				"XRX.....XXXXX.....XGX",	// 12
+				"X.X.XX....X....XX.X.X",	// 13
+				"XO...X....X....X...OX",	// 14
+				"X....X....X....X....X",	// 15
+				"XXXXXXXXXXXXXXXXXXXXX",	// 16
+				
+			};
+	  public static String[] MazeDefine_lvl8=
+			{
+				"XXXXXXXXXXXXXXXXXXXXX",	// 1
+				"X...................X",	// 2
+				"XO.XXXXX.X.X.XXXXX.OX",	// 3
+				"X..X...X1XRX.X...X..X",	// 4
+				"X..X...X.X.X.X...X..X",	// 5
+				"X..X.............X..X",	// 6
+				"X..X...XXX-XXX...X..X",	// 7
+				"X......X     X......X",	// 8
+				"X..X...X     X...X..X",	// 9
+				"X..X...XXXXXXX...X..X",	// 10
+				"X..X...... ......X..X",	// 11
+				"X..X...X.X.X.X...X..X",	// 12
+				"X..X...X.XMXGX...X..X",	// 13
+				"XO.XXXXX.X.X.XXXXX.OX",	// 14
+				"X...................X",	// 15
+				"XXXXXXXXXXXXXXXXXXXXX",	// 16
+				
+			};
+	  
+	  public static String[] MazeDefine_lvl9=
+			{
+				"XXXXXXXXXXXXXXXXXXXXX",	// 1
+				"X...................X",	// 2
+				"XOX.XXXXXXXXXXXXX.XOX",	// 3
+				"X.X.............X.X.X",	// 4
+				"X.X.X...........X.X.X",	// 5
+				"X.X1X...........XMX.X",	// 6
+				"X.X.X..XXX-XXX..X.X.X",	// 7
+				"X.X.X..X     X..X.X.X",	// 8
+				"X.XGX..X     X..X.X.X",	// 9
+				"X.X.X..XXXXXXX..X.XRX",	// 10
+				"X.X.X..... .....X.X.X",	// 11
+				"X.X.XXXXXXXXXXXXX.X.X",	// 12
+				"X.X...............X.X",	// 13
+				"XOXXXXXXXXXXXXXXXXXOX",	// 14
+				"X...................X",	// 15
+				"XXXXXXXXXXXXXXXXXXXXX",	// 16
+				
+			};
+	  
+
+	  
 
 }
 

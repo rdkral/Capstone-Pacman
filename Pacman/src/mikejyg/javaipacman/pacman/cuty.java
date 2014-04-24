@@ -25,6 +25,11 @@ package mikejyg.javaipacman.pacman;
  */
 public class cuty
 {
+	/**
+	 * 
+	 * @param iOdds
+	 * @return
+	 */
 	public static int RandDo(int iOdds)
 		// see if it happens within a probability of 1/odds
 	{
@@ -34,6 +39,11 @@ public class cuty
 	}	
 
 	// return a random number within [0..iTotal)
+	/**
+	 * 
+	 * @param iTotal
+	 * @return
+	 */
 	public static int RandSelect(int iTotal)
 	{
 		double a;
@@ -42,6 +52,11 @@ public class cuty
 		return( (int) a );
 	}
 
+	/**
+	 * 
+	 * @param iD
+	 * @return
+	 */
 	public static int IntSign(int iD)
 	{
 		if (iD==0)

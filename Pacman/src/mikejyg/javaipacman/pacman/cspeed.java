@@ -30,19 +30,29 @@ package mikejyg.javaipacman.pacman;
 public class cspeed
 {
 	// move steps per frames
-	int steps;
-	int frames;
+	double steps;
+	double frames;
+	int baseSpeed;
 
-	int frameCount;
-	int stepCount;
+	double frameCount;
+	double stepCount;
 
 	float frameStepRatio;
 
+	/**
+	 * Constructor
+	 */
 	cspeed()
 	{
 		start(1,1);
 	}
 
+	/**
+	 * 
+	 * @param stepsValue
+	 * @param frameValue
+	 * @throws Error
+	 */
 	public void start(int stepsValue, int frameValue)
 	throws Error
 	{
@@ -58,6 +68,10 @@ public class cspeed
 	}
 
 	// return 1 if move, 0 not move
+	/**
+	 * 
+	 * @return
+	 */
 	public int isMove()	
 	{
 		frameCount--;
@@ -77,19 +91,27 @@ public class cspeed
 		return(0);
 	}
 	
+	/**
+	 * 
+	 */
 	public void increaseSpeed()
 	{
-		if(steps < frames)
-		{
-			steps++;
-		}
+		baseSpeed++;
+//		if(steps < frames)
+//		{
+//			steps+=.5;
+//		}
 	}
 	
+	/**
+	 * 
+	 */
 	public void decreaseSpeed()
 	{
-		if(steps > 0)
-		{
-			steps--;
-		}
+		baseSpeed--;
+//		if(steps > 0)
+//		{
+//			steps-=.5;
+//		}
 	}
 }

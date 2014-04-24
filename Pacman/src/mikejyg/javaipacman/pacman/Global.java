@@ -1,5 +1,10 @@
 package mikejyg.javaipacman.pacman;
 
+/**
+ * 
+ * 
+ *
+ */
 public class Global {
 	/*Table for Affective State
 	 * 1 = engagement
@@ -15,7 +20,16 @@ public class Global {
 	public static int p = 0;
 	public static int a = 0;
 	public static int d = 0;
+	public static int num_of_ghosts = 4;
+	public static int score = 0;
+	public static int lives = 3;
+	public static String cur_song = new String("");
+	public static int dots_remaining = 0;
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public static String affectiveStateToString() {
 		String state = new String();
 		switch (affectiveState) {

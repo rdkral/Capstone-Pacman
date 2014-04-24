@@ -22,6 +22,11 @@ package mikejyg.javaipacman.pacman;
 import java.lang.Error;
 import java.awt.*;
 
+/**
+ * Base class used to generate all enemy ghosts. This class handles the ghosts initialization, movement,
+ * transitions between states, and drawing them to the screen. 
+ *
+ */
 public class cghost
 {
 	final int IN=0;
@@ -62,7 +67,13 @@ public class cghost
 	Image imageGhost; 
 	Image imageBlind;
 	Image imageEye;
-
+	/**
+	 * Constructor that initializes a ghost
+	 * @param a			The {@link Window} to draw the ghost to.
+	 * @param g			The {@link Graphics} that will allow the ghost to be drawn.
+	 * @param m			The {@link cmaze} in which the ghost is being drawn in.
+	 * @param newColor	The {@link Color} of the ghost.
+	 */
 	cghost(Window a, Graphics g, cmaze m, Color newColor)
 	{
 		applet=a;
@@ -79,7 +90,12 @@ public class cghost
 		imageEye=applet.createImage(18,18);
 		cimage.drawGhost(imageEye,2, Color.lightGray);
 	}
-
+	
+	/**
+	 * Starts ghosts movement
+	 * @param initialPosition		starting position of the ghost
+	 * @param round					value that helps determine the blind state length.
+	 */
 	public void start(int initialPosition, int round)
 	{
 
@@ -112,12 +128,26 @@ public class cghost
 		speed.start(steps[iStatus], frames[iStatus]);
 	}
 
+	/**
+	 * Draws the ghosts and the power ups to the screen.
+	 */
 	public void draw()
 	{
 		maze.DrawDot(iX/16, iY/16);
 		maze.DrawDot(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
-		maze.DrawOneUp(iX/16, iY/16); //<---------------------------------One-up
-		maze.DrawOneUp(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0)); //<-----One-up
+		
+		maze.DrawOneUp(iX / 16, iY / 16); // <---------------------------------One-up
+		maze.DrawOneUp(iX / 16 + (iX % 16 > 0 ? 1 : 0), iY / 16+ (iY % 16 > 0 ? 1 : 0)); // <-----One-up
+		
+		maze.DrawGrape(iX/16, iY/16);
+		maze.DrawGrape(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
+		
+		maze.DrawMelon(iX/16, iY/16);
+		maze.DrawMelon(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
+		
+		maze.DrawOrange(iX/16, iY/16);
+		maze.DrawOrange(iX/16+(iX%16>0?1:0), iY/16+(iY%16>0?1:0));
+		
 
 		if (iStatus==BLIND && iBlink==1 && iBlindCount%32<16)
 			graphics.drawImage(imageGhost, iX-1, iY-1, applet);
@@ -129,16 +159,31 @@ public class cghost
 			graphics.drawImage(imageEye, iX-1, iY-1, applet);
 	}  
 
+	/**
+	 * Sets the ghosts color
+	 * @param newColor		The {@link Color} to change the ghost to.
+	 */
 	public void setColor(Color newColor)
 	{
 		color = newColor;
 	}
 
+	/**
+	 * Returns the color of the ghost.
+	 * @return		A {@link Color}.
+	 */
 	public Color getColor()
 	{
 		return color;
 	}
 
+	/**
+	 * Determines the direction in which the ghost will move.
+	 * 
+	 * @param iPacX			The x-coordinate of pacman's current location.
+	 * @param iPacY			The y-coordinate of pacman's current location.
+	 * @param iPacDir		The direction the pacman is moving in.
+	 */
 	public void move(int iPacX, int iPacY, int iPacDir)
 	{
 		if (iStatus==BLIND)
@@ -187,7 +232,12 @@ public class cghost
 		}
 
 	}
-
+	
+	/**
+	 * Calculates the available directions to move in when a ghost is inside the spawn area?
+	 * @return
+	 * @throws Error
+	 */
 	public int INSelect()
 	// count available directions
 	throws Error
@@ -231,6 +281,14 @@ public class cghost
 		return(iDir);	
 	}
 
+	/**
+	 * Calculates a direction for when a is outside of the spawn area?.
+	 * @param iPacX			x-coordinate of pacman's current location.
+	 * @param iPacY			y-coordinate of pacman's current location.
+	 * @param iPacDir		Direction pacman is going in.
+	 * @return				Direction for the ghost to?
+	 * @throws Error
+	 */
 	public int OUTSelect(int iPacX, int iPacY, int iPacDir)
 	// count available directions
 	throws Error
@@ -299,6 +357,9 @@ public class cghost
 		return(iDir);
 	}
 
+	/**
+	 * Enables the blind state for a ghost.
+	 */
 	public void blind()
 	{
 		if (iStatus==BLIND || iStatus==OUT)
@@ -322,6 +383,11 @@ public class cghost
 		}
 	}
 
+	/**
+	 * Calculates the direction for a dead ghost to move to get back to the spawn.
+	 * @return			Direction.
+	 * @throws Error
+	 */
 	public int EYESelect()
 	// count available directions
 	throws Error
@@ -390,6 +456,14 @@ public class cghost
 		return(iDir);	
 	}	
 
+	/**
+	 * Calculates the direction for the ghost to move when they are in the blind state.
+	 * @param iPacX			x-coordinate of pacman's current location.
+	 * @param iPacY			y-coordinate of pacman's current location.
+	 * @param iPacDir		The direction pack man is moving in.
+	 * @return				The direction the ghost will move in (1-4).
+	 * @throws Error
+	 */
 	public int BLINDSelect(int iPacX, int iPacY, int iPacDir)
 	// count available directions
 	throws Error
@@ -459,6 +533,13 @@ public class cghost
 
 	// return 1 if caught the pac!
 	// return 2 if being caught by pac
+	
+	/**
+	 * Checks to see if the ghost has collided with pacman.
+	 * @param iPacX			x-coordinate of pacman's current location.
+	 * @param iPacY			y-coordinate of pacman's current location.
+	 * @return				(0-2)
+	 */
 	int testCollision(int iPacX, int iPacY)
 	{
 		if (iX<=iPacX+2 && iX>=iPacX-2

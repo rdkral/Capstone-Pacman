@@ -84,6 +84,8 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	// the off screen canvas for the maze
 	Image offScreen;
 	Graphics offScreenG;
+	
+	
 
 	// the objects    
 	cmaze maze;
@@ -94,7 +96,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	// game counters
 	final int PAcLIVE=3;
 	int numberOfGhosts = 4;
-	int maxNumberOfGhosts =8;
+	int maxNumberOfGhosts = 8;
 	int pacRemain;
 	int changePacRemain;  // to signal redraw remaining pac
 
@@ -107,13 +109,20 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 	String currEmotion;	
 	static boolean newEmotion = false;
-	
+	static boolean shouldUpdateGhost = false;
+	static boolean engagementEnable,boredomEnable,frustrationEnable,
+				   meditationEnable, agreementEnable,concentratingEnable, 
+				   disagreementEnable, interestedEnable;
+
 	//music
 	boolean isPlaying = false;
 	boolean firstSong = true;
-	boolean isNotFirstState = false;
+	boolean shouldIncreaseGhostSpeed = true;
+	static boolean isNotFirstState = false;
 	int focusedState;
-	
+	int ghostsBaseSpeed;
+	int pacBaseSpeed;
+
 	// score images
 	Image imgScore;
 	Graphics imgScoreG;
@@ -143,7 +152,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	MenuBar menuBar;
 	Menu help;
 	MenuItem about;
-	
+
 	static int prevState = 0;
 	static int currState;
 
@@ -153,26 +162,26 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	final int NONE=0;
 	final int SUSPEND=1;  // stop/start
 	final int BOSS=2;      // boss
-	
+
 	//Initialize Audio Player Files
-	
+
 	Path pathPP = Paths.get("PowerPellet.wav");
 	Path absPathPP = pathPP.toAbsolutePath();
 	File inputFilePP = new File(absPathPP.toString());
-	
+
 	Path pathEG = Paths.get("EatGhost.wav");
 	Path absPathEG = pathEG.toAbsolutePath();
 	File inputFileEG = new File(absPathEG.toString());
-	
+
 	Path path = Paths.get("PacManDie.wav");
 	Path absPath = path.toAbsolutePath();
 	File inputFile = new File(absPath.toString());
-	
+
 	Path path1up = Paths.get("1up.wav");
 	Path absPath1up = path1up.toAbsolutePath();
 	File inputFile1up = new File(absPath1up.toString());
-	
-	
+
+
 	/********************************************************
 	 * MUSIC FILES
 	 */
@@ -183,11 +192,11 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	Path pathEM2 = Paths.get("songSpeed2.wav");
 	Path absPathEM2 = pathEM2.toAbsolutePath();
 	File inputFile2 = new File(absPathEM2.toString());
-	
+
 	Path pathEM3 = Paths.get("songSpeed3.wav");
 	Path absPathEM3 = pathEM3.toAbsolutePath();
 	File inputFile3 = new File(absPathEM3.toString());
-	
+
 	Path pathEM4 = Paths.get("songSpeed3.wav");
 	Path absPathEM4 = pathEM4.toAbsolutePath();
 	File inputFile4 = new File(absPathEM4.toString());
@@ -195,35 +204,39 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	Path pathEM5 = Paths.get("songSpeed4.wav");
 	Path absPathEM5 = pathEM5.toAbsolutePath();
 	File inputFile5 = new File(absPathEM5.toString());
-	
+
 	Path pathEM6 = Paths.get("songSpeed5.wav");
 	Path absPathEM6 = pathEM6.toAbsolutePath();
 	File inputFile6 = new File(absPathEM6.toString());
-	
+
 	Path pathEM7 = Paths.get("songSpeed6.wav");
 	Path absPathEM7 = pathEM7.toAbsolutePath();
 	File inputFile7 = new File(absPathEM7.toString());
-	
+
 	Path pathEM8 = Paths.get("songSpeed7.wav");
 	Path absPathEM8 = pathEM8.toAbsolutePath();
 	File inputFile8 = new File(absPathEM8.toString());
-	
+
 	/*********************************************************
 	 * 
 	 */
-	
-	
+
+
 	String eatPowerPellet = inputFilePP.toString();
 	String eatGhost = inputFileEG.toString();
 	String pacDie = inputFile.toString();
 	String life = inputFile1up.toString();
-	
+
 	String emotion;
-	
+
 	Clip clip;
 	Clip emote;
-	
+
 	//Music
+	/**
+	 * 
+	 * @param filename
+	 */
 	public void playSound(String filename)
     {
 	    try
@@ -238,39 +251,44 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	        exc.printStackTrace(System.out);
 	    }
     }
-	
+
+	/**
+	 * 
+	 * @param song
+	 */
 	public void emoteSong(String song)
 	{
 		int affectState;
-		
+
 	    try
 	    {	
 	    	emote = AudioSystem.getClip();
 	    	affectState = Global.affectiveState;
-	    	
+
 	    	switch(affectState)
 	    	{
-		    	case 1 	: 	emotion = inputFile1.toString();
+		    	case 1 	: 	emotion = inputFile6.toString();
     						break;
-		    	case 2	: 	emotion = inputFile2.toString();
+		    	case 2	: 	emotion = inputFile8.toString();
 							break;
-		    	case 3	: 	emotion = inputFile3.toString();
+		    	case 3	: 	emotion = inputFile1.toString();
     						break;
-		    	case 4	: 	emotion = inputFile4.toString();
+		    	case 4	: 	emotion = inputFile7.toString();
 							break;
-		    	case 5	: 	emotion = inputFile5.toString();
+		    	case 5	: 	emotion = inputFile4.toString();
 							break;
-		    	case 6	: 	emotion = inputFile6.toString();
+		    	case 6	: 	emotion = inputFile5.toString();
 							break;
-		    	case 7	: 	emotion = inputFile7.toString();
+		    	case 7	: 	emotion = inputFile2.toString();
 							break;
-		    	case 8	: 	emotion = inputFile8.toString();
+		    	case 8	: 	emotion = inputFile3.toString();
 							break;
 	    	}
 
 	    	emote.open(AudioSystem.getAudioInputStream(new File(emotion)));
 	    	emote.start();
-	    	
+	    	Global.cur_song = emotion;
+
 	    	firstSong = false;
 	    }
 	    catch (Exception exc)
@@ -278,7 +296,11 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	        exc.printStackTrace(System.out);
 	    }
 	}
-	
+
+	/**
+	 * 
+	 * @param ghostAmount
+	 */
 	public void setNumberOfGhosts(int ghostAmount)
 	{
 		numberOfGhosts = ghostAmount;
@@ -288,6 +310,10 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	// only called once at the beginning
 	////////////////////////////////////////////////
 	@SuppressWarnings("deprecation")
+	
+	/**
+	 * 
+	 */
 	public cpcman()
 	{
 		super("P*C MAN");
@@ -295,18 +321,53 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		Properties configFile = new Properties();
 		InputStream input = null;
 		
+
 		try{
 			input = new FileInputStream("pacconfig.properties");
 			configFile.load(input);
-			
+
 			String stime = (configFile.getProperty("time"));
 
 			ttime = Integer.parseInt(stime);
 			ttime = ttime * 1000;
-			
+
 			String focus = (configFile.getProperty("focusedState"));
-			
+
 			focusedState = Integer.parseInt(focus);
+
+			String ghostBaseSpeed = (configFile.getProperty("ghostBaseSpeed"));
+			ghostsBaseSpeed = Integer.parseInt(ghostBaseSpeed);
+			
+			String pacSpeed = (configFile.getProperty("pacBaseSpeed"));
+			pacBaseSpeed = Integer.parseInt(pacSpeed);
+			
+						
+			String engagedEnable = (configFile.getProperty("engagement").toLowerCase());
+			engagementEnable = Boolean.parseBoolean(engagedEnable);
+			
+			String boredomConfig = (configFile.getProperty("boredom").toLowerCase());
+			boredomEnable =Boolean.parseBoolean(boredomConfig);
+			
+			String frustrationConfig = (configFile.getProperty("frustration").toLowerCase());
+			frustrationEnable = Boolean.parseBoolean(frustrationConfig);
+				
+			String meditationConfig = (configFile.getProperty("meditation").toLowerCase());
+			meditationEnable = Boolean.parseBoolean( meditationConfig);
+			
+			String agreementConfig = (configFile.getProperty("agreement").toLowerCase());
+			agreementEnable = Boolean.parseBoolean(agreementConfig);
+			
+			String concentratingConfig = (configFile.getProperty("concentrating").toLowerCase());
+			concentratingEnable = Boolean.parseBoolean(concentratingConfig);
+			
+			String disagreementConfig = (configFile.getProperty("disagreement").toLowerCase());
+			disagreementEnable =Boolean.parseBoolean( disagreementConfig);
+			
+			String interestedConfig = (configFile.getProperty("interested").toLowerCase());
+			interestedEnable = Boolean.parseBoolean(interestedConfig);
+			
+
+
 		}
 		catch (IOException e)
 		{
@@ -336,6 +397,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 	}
 
+	/**
+	 * 
+	 */
 	void initGUI()
 	{
 		menuBar=new MenuBar();
@@ -352,6 +416,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		// System.out.println("initGUI done.");
 	}
 
+	/**
+	 * 
+	 */
 	public void initImages()
 	{
 		// initialize off screen drawing canvas
@@ -417,6 +484,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 	}
 
+	/**
+	 * 
+	 */
 	void startTimer()
 	{   
 		// start the timer
@@ -424,6 +494,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		timer.start();
 	}
 
+	/**
+	 * 
+	 */
 	void startGame()
 	{
 		pacRemain=PAcLIVE;
@@ -435,15 +508,18 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		newMaze=true;
 
 		round=1;
-		
+
 		//playSound();
 		startRound();
-		
+
         newEmotion = true;
 		isPlaying = false;    
 
 	}
 
+	/**
+	 * 
+	 */
 	void startRound()
 	{
 		// new round for maze?
@@ -456,13 +532,16 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 		maze.draw();	// draw maze in off screen buffer
 
+		pac.speed = pacBaseSpeed;
 		pac.start();
 		pacKeyDir=ctables.DOWN;
 		for (int i=0; i<ghosts.size(); i++)
 		{	
+			ghosts.elementAt(i).speed.baseSpeed = ghostsBaseSpeed;
 			ghosts.elementAt(i).start(i,round);
+			
 		}
-		
+
 
 		gameState=STARTWAIT;
 		wait=WAITCOUNT;
@@ -471,6 +550,10 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	///////////////////////////////////////////
 	// paint everything
 	///////////////////////////////////////////
+	
+	/**
+	 * 
+	 */
 	public void paint(Graphics g)
 	{
 		if (gameState == INITIMAGE)
@@ -512,13 +595,26 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		paintUpdate(g);
 	}
 
+	/**
+	 * 
+	 * @param g
+	 */
 	void paintUpdate(Graphics g)
 	{
 		// updating the frame
 
 		powerDot.draw();
-
-	
+		
+	//	int affectiveState = 2;
+	//	if(affectiveState==3 || affectiveState==7)
+		//if(Global.affectiveState == 1 || Global.affectiveState==3 || Global.affectiveState==6 || Global.affectiveState==7)
+		//{
+			maze.drawOneUp(); // <---------------One-up
+			maze.drawOrange();
+			maze.drawGrape();
+			maze.drawMelon();
+		//}
+		
 		for (int i=0; i<ghosts.size(); i++)
 			ghosts.elementAt(i).draw();
 
@@ -551,6 +647,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 					158+ leftOffset, 0+ topOffset, this);
 
 			changeScore=0;
+			Global.score = score;
 		}
 
 		// update pac life info
@@ -569,29 +666,36 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 
 			changePacRemain=0;
 		}
-		
+
 		//If the state was recently updated then draw an emoji
 		drawEmoji(g);
-		
+
 	}
 
-	
-	
+
+
 	////////////////////////////////////////////////////////////
 	// controls moves
 	// this is the routine running at the background of drawings
 	////////////////////////////////////////////////////////////
+	
+	/**
+	 * 
+	 */
 	void move()
 	{
 		int k;
 
 		int oldScore=score;
 
+		moveGhosts();
 
-		for (int i=0; i<ghosts.size(); i++)
-			ghosts.elementAt(i).move(pac.iX, pac.iY, pac.iDir);
 
-		k=pac.move(pacKeyDir);
+		for(int index = 0; index <pac.speed; index++)
+		{
+
+			k=pac.move(pacKeyDir);
+			Global.dots_remaining = maze.iTotalDotcount;
 
 		if (k==1)	// eaten a dot
 		{
@@ -608,16 +712,36 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			playSound(life);	//play eatPowerPellet Audio
 			pacRemain++; //<<---------------------One-up
 			changePacRemain=1;
-		}
-
-		if (maze.iTotalDotcount==0)
+		}else if (k==4)	// eaten orange
 		{
-			gameState=DEADWAIT;
-			wait=WAITCOUNT;
-			newMaze=true;
-			round++;
-			return;
+			playSound(life);
+			changeScore=1;
+			score+= 20 * ((round+1)/2) ;
+		}else if (k==5)	// eaten melon
+		{
+			playSound(life);
+			changeScore=1;
+			score+= 20 * ((round+1)/2) ;
+		}else if (k==6)	// eaten gwape
+		{
+			playSound(life);
+			changeScore=1;
+			score+= 20 * ((round+1)/2) ;
 		}
+		
+		if (maze.iTotalDotcount==0)
+			{
+				gameState=DEADWAIT;
+				try {
+					clogger.outputdeath();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				wait=WAITCOUNT;
+				newMaze=true;
+				round++;
+				return;
+			}
 
 		for (int i=0; i<ghosts.size(); i++)
 		{
@@ -627,10 +751,18 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 				playSound(pacDie);	//play pacDie Audio
 				if(newEmotion)
 					emote.stop();		//stop emote song
-				
+
 				pacRemain--;
 				changePacRemain=1;
 				gameState=DEADWAIT;	// stop the game
+				
+				//Log the death
+				try {
+					clogger.outputdeath();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
 				wait=WAITCOUNT;
 				return;	
 			}
@@ -657,11 +789,32 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 				changePacRemain=1;
 			}
 		}
+			//repaint();
+			paintUpdate(this.getGraphics());
+		
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public void moveGhosts()
+	{
+		for(int index = 0; index < ghosts.elementAt(index).speed.baseSpeed; index++)
+		{
+			for (int i=0; i<ghosts.size(); i++)
+				ghosts.elementAt(i).move(pac.iX, pac.iY, pac.iDir);
+			paintUpdate(this.getGraphics());
+		}
 	}	
 
 	///////////////////////////////////////////
 	// this is the routine draw each frames
 	///////////////////////////////////////////
+	
+	/**
+	 * 
+	 */
 	public void update(Graphics g)
 	{
 		// System.out.println("update called");
@@ -683,7 +836,7 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			switch (gameState)
 			{
 			case STARTWAIT: 
-				if (pacKeyDir==ctables.UP)	// the key to start game
+				if (pacKeyDir==ctables.UP || pacKeyDir == ctables.DOWN || pacKeyDir==ctables.LEFT || pacKeyDir==ctables.RIGHT)	// the key to start game
 					gameState=RUNNING;
 				else
 					return;
@@ -717,6 +870,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	///////////////////////////////////////
 	// process key input
 	///////////////////////////////////////
+	/**
+	 * 
+	 */
 	public void keyPressed(KeyEvent e)
 	{
 		switch (e.getKeyCode())
@@ -753,6 +909,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	/////////////////////////////////////////////////
 	// handles menu event
 	/////////////////////////////////////////////////
+	/**
+	 * 
+	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		if (gameState==RUNNING)
@@ -788,6 +947,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	/////////////////////////////////////////////////
 	// the timer
 	/////////////////////////////////////////////////
+	/**
+	 * 
+	 */
 	public void run()
 	{
 		while (true)
@@ -799,43 +961,63 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			}
 
 			signalMove++;
-			repaint();
-						
 			if(newEmotion)
-			{
 				emotionChange();
-				adjustGhosts();
-			}
+			if(pac.speed > 1)
+				shouldIncreaseGhostSpeed = false;
+			else
+				shouldIncreaseGhostSpeed = true;
+			adjustGhosts();
+			repaint();
 		}
 	}
-	
+
+	/**
+	 * Adjusts the difficulty of the game by changing the speed of the ghosts or pacman, and the number of ghosts that spawn in
+	 * the game based off of the user state.
+	 */
 	public void adjustGhosts()
 	{	
 		if(isNotFirstState)
 		{
-			if(Global.affectiveState == 1)
+			if((Global.affectiveState == 1) && shouldUpdateGhost && stateEnabled(Global.affectiveState))
 			{
-				addGhost();
-				if(ghosts.size() == maxNumberOfGhosts)
-				{
-					increaseSpeedOfAllGhosts();
-				}
+				if(shouldIncreaseGhostSpeed == false)//pac.speed >1)	
+					decreasePacSpeed();
+				else
+					{
+						if(shouldIncreaseGhostSpeed)
+						{
+							increaseSpeedOfAllGhosts();
+						}
+						shouldIncreaseGhostSpeed = false;
+					}
 			}
-			else if (Global.affectiveState == 2)
+			else if ((Global.affectiveState == 2) && shouldUpdateGhost && stateEnabled(Global.affectiveState))
 			{
+				//Increase music speed
+				//Load harder lvl
 				addGhost();
-				increaseSpeedOfAllGhosts();
+				
 			}
-			else if (Global.affectiveState == 3)
+			else if ((Global.affectiveState == 3) && shouldUpdateGhost && stateEnabled(Global.affectiveState))
 			{
-				removeGhost();
+				//Slow Down music
+				//Load Easier map
+				if(ghosts.size() > 3)
+					removeGhost();
+				increasePacSpeed();
 			
 			}
 			else 
 			{
-				increaseSpeedOfAllGhosts();
+				if(shouldUpdateGhost && stateEnabled(Global.affectiveState))
+				{
+					increaseSpeedOfAllGhosts();
+				}
 				
 			}
+			shouldUpdateGhost = false;
 			
 			paintUpdate(this.getGraphics());
 			
@@ -843,68 +1025,146 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		else
 			isNotFirstState = true;
 	}
-	
+
+	/**
+	 * Adds one additional ghost to the game if the current number of ghosts in game is below the max allowed 
+	 * number of ghosts.
+	 */
 	public void addGhost()
 	{
 		if(ghosts.size() < maxNumberOfGhosts)
 		{
 			ghosts.addElement(new cghost(this, offScreenG, maze, Color.GRAY));
 			ghosts.lastElement().start(ghosts.size(), round);
-			repaint();
+			//repaint();
 		}
+		Global.num_of_ghosts = ghosts.size() + 1;
 	}
-	
+
+	/**
+	 * Removes one ghosts from the game if the current number of ghosts in game is above the minimum allowed. 
+	 */
 	public void removeGhost()
 	{
 		if (ghosts.size() > numberOfGhosts)
 		{
 			ghosts.remove(ghosts.size()-1);
-			repaint();
+			//repaint();
 		}
+		Global.num_of_ghosts = ghosts.size() + 1;
+	}
+
+	/**
+	 * Increases the speed of pacman if the current speed is less than 4.
+	 */
+	public void increasePacSpeed()
+	{
+		if(pac.speed < 4)
+			pac.speed++;
 	}
 	
+	/**
+	 * Decreases the speed of pacman if the current speed is above 0.
+	 */
+	public void decreasePacSpeed()
+	{
+		if(pac.speed >0)
+			pac.speed--;
+	}
+
+	/**
+	 * Increases the speed of all ghosts in the game by one.
+	 */
 	public void increaseSpeedOfAllGhosts()
 	{
 		for(cghost ghost: ghosts)
 		{
-			ghost.speed.increaseSpeed();
+			if(ghost.speed.baseSpeed <4)
+				ghost.speed.increaseSpeed();
+
 		}
 	}
+	
+	/**
+	 * Decreases the speed of all ghosts in the game by one.
+	 */
 	public void decreaseSpeedOfAllGhosts()
 	{
 		for(cghost ghost: ghosts)
 		{
-			ghost.speed.decreaseSpeed();
+			if(ghost.speed.baseSpeed >0)
+				ghost.speed.decreaseSpeed();
 		}
 	}
 	
+	/**
+	 * Gets the current status of the emotional state in question
+	 * @param state			The state in question.
+	 * @return				<code>true</code> if the state is enabled.
+	 * 						<code>false</code> if the state is disabled.
+	 */
+	public Boolean stateEnabled(int state)
+	{
+		Boolean enabled = false;
+		switch(state)
+		{
+			case 1: enabled = engagementEnable;
+				break;
+			case 2: enabled = boredomEnable;
+				break;
+			case 3: enabled = frustrationEnable;
+				break;
+			case 4: enabled = meditationEnable;
+				break;
+			case 5: enabled = agreementEnable;
+				break;
+			case 6: enabled = concentratingEnable;
+				break;
+			case 7: enabled = disagreementEnable;
+				break;
+			case 8: enabled = interestedEnable;
+			default: enabled = false;
+		}
+			return enabled;
+	}
+
+	/**
+	 * 
+	 */
 	public void emotionChange()
 	{
 		int affectState = Global.affectiveState;
-		
-		if (affectState > 0)
+
+		if (stateEnabled(affectState))
 		{
-			if(firstSong)
+			if(affectState > 0)
 			{
-				emoteSong(emotion);
-				newEmotion = false;
+				if(firstSong)
+				{
+					emoteSong(emotion);
+					newEmotion = false;
+				}
+				else
+				{
+					emote.stop();
+
+					emoteSong(emotion);
+					newEmotion = false;
+				}
+
 			}
-			else
-			{
-				emote.stop();
-				
-				emoteSong(emotion);
-				newEmotion = false;
-			}
-			
 		}
 		else
 			newEmotion = false;
+		
 	}
 
 	// for applet the check state
 	boolean finalized=false;
 
+	/**
+	 * 
+	 */
 	public void dispose()
 	{
 		//      timer.stop();	// deprecated
@@ -950,7 +1210,11 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	public void setFinalized(boolean finalized) {
 		this.finalized = finalized;
 	}
-	
+
+	/**
+	 * 
+	 * @param g
+	 */
 	void drawEmoji(Graphics g) {
 		//Load an image from a file
 		BufferedImage img = null;
@@ -978,13 +1242,12 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		g.drawImage(img, -32 + canvasWidth, canvasHeight - 23 + topOffset, null);
-		
+
 		//Global.changedState = false; //@TODO
-	
+
 	}
-    
     
     /**********Multi-threading**********/
     
@@ -1010,5 +1273,5 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 			//return null;
 		}
 	};
-	
+
 }

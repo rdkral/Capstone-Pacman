@@ -21,8 +21,17 @@ package mikejyg.javaipacman.pacman;
 
 import java.awt.*;
 
+/**
+ * 
+ * 
+ *
+ */
 public class cimage
 {
+	/**
+	 * 
+	 * @param img
+	 */
 	public static void drawDot(Image img)
 	{
 		Graphics g=img.getGraphics();
@@ -31,6 +40,10 @@ public class cimage
 		g.dispose();
 	}
 
+	/**
+	 * 
+	 * @param img
+	 */
 	public static void drawPowerDot(Image img)
 	{
 		Graphics g=img.getGraphics();
@@ -54,6 +67,10 @@ public class cimage
 		g.dispose();
 	}
 	
+	/**
+	 * 
+	 * @param img
+	 */
 	public static void drawOneUp(Image img)
 	{
 		Graphics g=img.getGraphics();
@@ -76,7 +93,95 @@ public class cimage
 			}
 		g.dispose();
 	}
+	
+	/**
+	 * 
+	 * @param img
+	 */
+	public static void drawOrange(Image img)
+	{
+		Graphics g=img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0,0,16,16);
+		g.setColor(Color.orange);
+		int iCounter=0;
+		short mask=0x01;
+		for (int i=0; i<16; i++)
+			for (int j=0; j<16; j++)
+			{
+				if ((orange_bits[iCounter] & mask)!=0)
+					g.fillRect(j,i,1,1);
+				mask <<=1;
+				if ((mask&0xff)==0)
+				{
+					mask=0x01;
+					iCounter++;
+				}
+			}
+		g.dispose();
+	}
+	
+	/**
+	 * 
+	 * @param img
+	 */
+	public static void drawMelon(Image img)
+	{
+		Graphics g=img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0,0,16,16);
+		g.setColor(Color.green);
+		int iCounter=0;
+		short mask=0x01;
+		for (int i=0; i<16; i++)
+			for (int j=0; j<16; j++)
+			{
+				if ((melon_bits[iCounter] & mask)!=0)
+					g.fillRect(j,i,1,1);
+				mask <<=1;
+				if ((mask&0xff)==0)
+				{
+					mask=0x01;
+					iCounter++;
+				}
+			}
+		g.dispose();
+	}
+	
+	/**
+	 * 
+	 * @param img
+	 */
+	public static void drawGrape(Image img)
+	{
+		Graphics g=img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0,0,16,16);
+		g.setColor(Color.magenta);
+		int iCounter=0;
+		short mask=0x01;
+		for (int i=0; i<16; i++)
+			for (int j=0; j<16; j++)
+			{
+				if ((grape_bits[iCounter] & mask)!=0)
+					g.fillRect(j,i,1,1);
+				mask <<=1;
+				if ((mask&0xff)==0)
+				{
+					mask=0x01;
+					iCounter++;
+				}
+			}
+		g.dispose();
+	}
 
+	/**
+	 * 
+	 * @param img
+	 * @param dir
+	 * @param step
+	 * @param col
+	 */
 	public static void drawPac(Image img, int dir, int step, Color col)
 	{
 		Graphics g=img.getGraphics();
@@ -100,6 +205,12 @@ public class cimage
 		g.dispose();
 	}
 
+	/**
+	 * 
+	 * @param img
+	 * @param number
+	 * @param color
+	 */
 	public static void drawGhost(Image img, int number, Color color)
 	{
 		Graphics g=img.getGraphics();
@@ -123,10 +234,10 @@ public class cimage
 		g.dispose();
 	}
 
-	////////////////////////////////////////////////////////////////////////////////
-	// image arrays
-	////////////////////////////////////////////////////////////////////////////////
-
+/**
+ * Image Arrays
+ * 
+ */
 	static final short [][][] pac_bits =
 	{	// [4][4][32]
 		// right 
@@ -251,6 +362,7 @@ public class cimage
 		0xc0, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 	};
 	
+	
 	static final short [] oneup_bits =
 			// [32]
 			// show	
@@ -258,6 +370,26 @@ public class cimage
 			0x80, 0x01, 0x80, 0x01, 0x80, 0x01, 0x80, 0x01, 0x80, 0x01, 0x80, 0x01,
 			0xe0, 0x07, 0xe0, 0x07, 0xe0, 0x07, 0x00, 0x00
 		};
+	
+	static final short [] orange_bits = 
+		{   0x00, 0x00, 0xc0, 0x03, 0x80, 0x01, 0xc0, 0x03, 0xe0, 0x07, 0xf0, 0x0f,
+		0xf8, 0x1f, 0xf8, 0x1f, 0xf8, 0x1f, 0xf8, 0x1f, 0xf0, 0x0f, 0xe0, 0x07,
+		0xc0, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+		};
+	
+	static final short [] melon_bits = 
+		{   0x00, 0x00, 0xc0, 0x03, 0x80, 0x01, 0xc0, 0x03, 0xe0, 0x07, 0xf0, 0x0f,
+			0xf8, 0x1f, 0xf8, 0x1f, 0xf8, 0x1f, 0xf8, 0x1f, 0xf0, 0x0f, 0xe0, 0x07,
+			0xc0, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+		};
+	
+	static final short [] grape_bits = 
+		{   0x00, 0x00, 0xc0, 0x03, 0x80, 0x01, 0xc0, 0x03, 0xe0, 0x07, 0xf0, 0x0f,
+		0xf8, 0x1f, 0xf8, 0x1f, 0xf8, 0x1f, 0xf8, 0x1f, 0xf0, 0x0f, 0xe0, 0x07,
+		0xc0, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+		};
+	
+	
 
 }
 
