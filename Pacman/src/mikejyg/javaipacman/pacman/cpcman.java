@@ -927,7 +927,9 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 	{}
 
 	public void windowClosing(WindowEvent e)
-	{}
+	{
+		System.exit(0);
+	}
 
 	public void windowClosed(WindowEvent e)
 	{}
@@ -1259,7 +1261,6 @@ implements Runnable, KeyListener, ActionListener, WindowListener
 				{
 					try {
 						AffectiveStateAccessor.getAffectiveState();
-						//newEmotion = true;	
 						} catch (UnknownHostException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

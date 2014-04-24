@@ -11,7 +11,13 @@ import java.net.UnknownHostException;
  * through a socket connection. Then generating emotional states from the provided values. It
  * is also responsible for signaling when there has been a change to a new emotion. 
  * 
+<<<<<<< HEAD
  * This class was not in the original project.
+=======
+ * This class was not in the original project. It was created as part of the Capstone Team project
+ *
+ * @author Capstone team
+>>>>>>> d5459d8e3f3cce338e99e01c13ce975ceb59e5fd
  * 
  * Table for Affective States
  * 1 = engagement
